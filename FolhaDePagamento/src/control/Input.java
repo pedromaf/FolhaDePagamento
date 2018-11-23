@@ -9,12 +9,13 @@ public class Input {
 
     private static Scanner input = new Scanner(System.in);
 
+    //VALIDAR ENTRADAS
     public static int validarOperacao(int limite1, int limite2) {
 
         int operacao;
 
         do {
-            operacao = entradaInt();
+            operacao = lerInt();
 
             if(operacao < limite1 || operacao > limite2) {
                 Erro.operacaoInvalida(limite1, limite2);
@@ -30,7 +31,7 @@ public class Input {
         double percentual;
 
         do {
-            percentual = entradaDouble();
+            percentual = lerDouble();
 
             if(percentual < 0 || percentual > 1) {
                 Erro.percentualInvalido();
@@ -48,22 +49,25 @@ public class Input {
         return false;
     }
 
-    public static String entradaString() {
+
+
+    //LER TIPO DE DADO ESPECIFICO
+    public static String lerString() {
 
         return input.nextLine();
     }
 
-    public static double entradaDouble() {
+    public static double lerDouble() {
 
         return Double.parseDouble(input.nextLine());
     }
 
-    public static int entradaInt() {
+    public static int lerInt() {
 
         return Integer.parseInt(input.nextLine());
     }
 
-    public static Empregado.Tipo entradaTipoEmpregado() {
+    public static Empregado.Tipo lerTipoEmpregado() {
 
         int opcao = validarOperacao(1,3);
         switch(opcao) {

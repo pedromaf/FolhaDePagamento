@@ -12,12 +12,16 @@ public class ControleEmpregados {
 
     private ArrayList<Empregado> listaEmpregados;
 
+    private Empregado ultimoEmpregadoAdicionado;
+    private Empregado ultimoEmpregadoRemovido;
+
     ControleEmpregados() {
 
         listaEmpregados = new ArrayList<>();
     }
 
-    public void adicionarEmpregado() {
+    //ADICIONAR
+    public boolean adicionarEmpregado() {
 
         String nome;
         String endereco;
@@ -28,43 +32,140 @@ public class ControleEmpregados {
         double taxaSindicato = 0;
         int idSindicato = 0;
 
-        Menu.solicitarNome();
-        nome = Input.entradaString();
+        Console.solicitarNome();
+        nome = Input.lerString();
 
-        Menu.solicitarEndereco();
-        endereco = Input.entradaString();
+        Console.solicitarEndereco();
+        endereco = Input.lerString();
 
-        Menu.menuTipoEmpregado();
-        tipo = Input.entradaTipoEmpregado();
+        Console.menuTipoEmpregado();
+        tipo = Input.lerTipoEmpregado();
 
         switch(tipo) {
             case HORISTA:
-                Menu.solicitarSalarioHora();
-                salario = Input.entradaDouble();
+                Console.solicitarSalarioHora();
+                salario = Input.lerDouble();
                 break;
             case COMISSIONADO:
-                Menu.solicitarComissao();
+                Console.solicitarComissao();
                 comissao = Input.validarPercentual();
             case ASSALARIADO:
-                Menu.solicitarSalarioMensal();
-                salario = Input.entradaDouble();
+                Console.solicitarSalarioMensal();
+                salario = Input.lerDouble();
                 break;
         }
 
-        Menu.menuSindicalizado();
+        Console.menuSindicalizado();
         sindicalizado = Input.validarSindicalizado();
 
         if(sindicalizado) {
             idSindicato = ++idSindicatoGeral;
-            Menu.solicitarTaxaSindicato();
+            Console.solicitarTaxaSindicato();
             taxaSindicato = Input.validarPercentual();
         }
 
-        listaEmpregados.add(new Empregado(nome, endereco, tipo, sindicalizado, taxaSindicato, salario, comissao, ++idSistemaGeral, idSindicato));
-        Menu.empregadoAdicionado();
+        Empregado novoEmpregado = new Empregado(nome, endereco, tipo, sindicalizado, taxaSindicato, salario, comissao, ++idSistemaGeral, idSindicato);
+        ultimoEmpregadoAdicionado = novoEmpregado;
+        listaEmpregados.add(novoEmpregado);
+        Console.empregadoAdicionado();
+        return true;
     }
 
-    public void removerEmpregado() {
-        //TODO
+
+    //REMOVER
+    public boolean removerEmpregado() {
+
+        if(listaEmpregados.isEmpty()) {
+            Console.listaVazia();
+            return false;
+        } else {
+            int id;
+
+            listarEmpregados();
+
+            Console.solicitarId();
+            id = Input.lerInt();
+
+            for(Empregado atual: listaEmpregados) {
+                if(atual.getIdSistema() == id) {
+                    ultimoEmpregadoRemovido = listaEmpregados.remove(listaEmpregados.indexOf(atual));
+                    Console.empregadoRemovido();
+                    return true;
+                }
+            }
+
+            Erro.idInvalido();
+            return false;
+        }
+    }
+
+    private void listarEmpregados() {
+
+        for(Empregado atual: listaEmpregados) {
+            Console.mostrarString(atual.toString());
+        }
+    }
+
+
+    //DESFAZER/REFAZER
+    public boolean desfazerRefazer(int ultimaOperacao, boolean desfazer) {
+
+        switch(ultimaOperacao) {
+            case 0:
+                Console.operacaoNaoRealizada();
+                return desfazer;
+            case 1:
+                if(desfazer) {
+                    desfazerAdicionarEmpregado();
+                } else {
+                    refazerAdicionarEmpregado();
+                }
+                break;
+            case 2:
+                if(desfazer) {
+                    desfazerRemoverEmpregado();
+                } else {
+                    refazerRemoverEmpregado();
+                }
+                break;
+                default:
+                    return desfazer;
+        }
+
+        return !desfazer;
+    }
+
+    private void desfazerAdicionarEmpregado() {
+
+        for(Empregado atual: listaEmpregados) {
+            if(ultimoEmpregadoAdicionado.equals(atual)) {
+                listaEmpregados.remove(atual);
+                Console.adicionarDesfeito();
+                return;
+            }
+        }
+    }
+
+    private void refazerAdicionarEmpregado() {
+
+        listaEmpregados.add(ultimoEmpregadoAdicionado);
+        Console.adicionarRefeito();
+    }
+
+    private void desfazerRemoverEmpregado() {
+
+        listaEmpregados.add(ultimoEmpregadoRemovido);
+        Console.removerDesfeito();
+    }
+
+    private void refazerRemoverEmpregado() {
+
+        for(Empregado atual: listaEmpregados) {
+            if(ultimoEmpregadoRemovido.equals(atual)) {
+                listaEmpregados.remove(atual);
+                Console.removerRefeito();
+                return;
+            }
+        }
     }
 }

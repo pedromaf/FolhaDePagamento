@@ -52,6 +52,16 @@ public class Empregado {
         this.endereco = endereco;
         this.tipo = tipo;
         this.sindicalizado = sindicalizado;
-        this.formaDePagamento = FormaDePagamento.BANCO;
+        this.formaDePagamento = FormaDePagamento.BANCO; //PADRAO
+    }
+
+    public int getIdSistema() {
+
+        return this.idSistema;
+    }
+
+    public String toString() {
+
+        return "[" + this.idSistema + "] " + this.nome;
     }
 }

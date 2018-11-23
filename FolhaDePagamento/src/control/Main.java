@@ -8,22 +8,26 @@ public class Main {
 
         ControleEmpregados controleEmpregados = new ControleEmpregados();
 
-        boolean exit = false;
+        boolean sair = false;
+        boolean desfazer = true;
+        boolean operacaoRealizda;
         int operacao;
         int ultimaOperacao = 0;
 
         do {
-            Menu.menuPrincipal();
+            Console.menuPrincipal();
 
             operacao = Input.validarOperacao(1,11);
+            operacaoRealizda = false;
             switch(operacao) {
                 case 1:
-                    controleEmpregados.adicionarEmpregado();
+                    operacaoRealizda = controleEmpregados.adicionarEmpregado();
                     break;
                 case 2:
-                    //controleEmpregados.removerEmpregado();
+                    operacaoRealizda = controleEmpregados.removerEmpregado();
                     break;
                 case 3:
+                    //TODO
                     break;
                 case 4:
                     break;
@@ -34,20 +38,21 @@ public class Main {
                 case 7:
                     break;
                 case 8:
+                    desfazer = controleEmpregados.desfazerRefazer(ultimaOperacao, desfazer);
                     break;
                 case 9:
                     break;
                 case 10:
                     break;
                 case 11:
-                    exit = true;
+                    sair = true;
                     break;
             }
 
-            if(operacao <= 7) {
+            if(operacaoRealizda) {
                 ultimaOperacao = operacao;
             }
-        } while(!exit);
+        } while(!sair);
 
     }
 }
