@@ -14,6 +14,7 @@ public class ControleEmpregados {
     private ArrayList<Empregado> listaEmpregados;
 
     //CACHE
+    // TODO MUDANCA NA FORMA DE ARMAZENAR CACHE NECESSARIA (ultimoEmpregadoUtilizado -> ultimoEmpregadoAdicionadoOuRemovido)
     private Empregado ultimoEmpregadoUtilizado;
 
 

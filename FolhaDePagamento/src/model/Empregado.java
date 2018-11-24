@@ -1,5 +1,6 @@
 package model;
 
+//O acesso ao modulo view por parte dessa classe nao deveria acontecer, mas por motivos de simplificacao de codigo foi necessario. gg
 import view.Console;
 
 import java.util.ArrayList;
