@@ -17,9 +17,12 @@ public class Main {
         do {
             Console.menuPrincipal();
 
-            operacao = Input.validarOperacao(1,11);
+            operacao = Input.validarOperacao(0,11);
             operacaoRealizda = false;
             switch(operacao) {
+                case 0:
+                    controleEmpregados.relatorio(); //OPCAO PARA CONFERIR AS FUNCIONALIDADES (NÃO FAZ PARTE DO PROJETO DO SISTEMA)
+                    break;
                 case 1:
                     operacaoRealizda = controleEmpregados.adicionarEmpregado();
                     break;
@@ -30,6 +33,7 @@ public class Main {
                     operacaoRealizda = controleEmpregados.registrarNoCartaoDePonto();
                     break;
                 case 4:
+                    operacaoRealizda = controleEmpregados.registrarResultadoDeVenda();
                     break;
                 case 5:
                     break;

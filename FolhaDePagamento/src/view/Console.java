@@ -6,7 +6,8 @@ public class Console {
     //MENUS
     public static void menuPrincipal() {
 
-        System.out.println("\n[1]  Adicionar empregado");
+        System.out.println("\n[0]  Relatorio de empregados (VERIFICAR DADOS)");
+        System.out.println("[1]  Adicionar empregado");
         System.out.println("[2]  Remover empregado");
         System.out.println("[3]  Lancar cartao de ponto");
         System.out.println("[4]  Lancar resultado de venda");
@@ -50,6 +51,7 @@ public class Console {
     }
 
 
+
     //SOLICITAR ENTRADA
     public static void solicitarOpcao() {
 
@@ -89,6 +91,11 @@ public class Console {
     public static void solicitarTaxaSindicato() {
 
         System.out.println("Digite o percentual da taxa sindical [0.0 ate 1.0]:");
+    }
+
+    public static void solicitarValorDaVenda() {
+
+        System.out.println("Digite o valor da venda realizada:");
     }
 
 
@@ -147,6 +154,18 @@ public class Console {
 
 
 
+    //REGISTRAR RESULTADO DE VENDA
+    public static void empregadoNaoComissionado() {
+
+        System.out.println("O empregado selecionado nao e comissionado.");
+    }
+
+    public static void resultadoDeVendaRegistrado() {
+
+        System.out.println("Resultado de venda registrado!");
+    }
+
+
     //DESFAZER/REFAZER
     public static void operacaoNaoRealizada() {
 
@@ -173,6 +192,25 @@ public class Console {
         System.out.println("Operacao refeita! Empregado removido.");
     }
 
+    public static void registroNoCartaoDePontoDesfeito() {
+
+        System.out.println("Operacao desfeita! Registro no cartao de ponto removido.");
+    }
+
+    public static void registroNoCartaoDePontoRefeito() {
+
+        System.out.println("Operacao refeita! Registro no cartao de ponto adicionado.");
+    }
+
+    public static void registroResultadoDeVendaDesfeito() {
+
+        System.out.println("Operacao desfeita! Registro de resultado de venda removido.");
+    }
+
+    public static void registroResultadoDeVendaRefeito() {
+
+        System.out.println("Operacao refeita! Registro de resultado de venda adicionado.");
+    }
 
 
     //GERAL

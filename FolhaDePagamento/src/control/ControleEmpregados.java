@@ -14,9 +14,8 @@ public class ControleEmpregados {
     private ArrayList<Empregado> listaEmpregados;
 
     //CACHE
-    // TODO MUDANCA NA FORMA DE ARMAZENAR CACHE NECESSARIA (ultimoEmpregadoUtilizado -> ultimoEmpregadoAdicionadoOuRemovido)
     private Empregado ultimoEmpregadoUtilizado;
-
+    private Empregado ultimoEmpregadoUtilizadoAuxiliar;
 
     ControleEmpregados() {
 
@@ -95,7 +94,7 @@ public class ControleEmpregados {
         }
 
         Empregado novoEmpregado = new Empregado(nome, endereco, tipo, sindicalizado, taxaSindicato, salario, comissao, ++idSistemaGeral, idSindicato);
-        ultimoEmpregadoUtilizado = novoEmpregado;
+        ultimoEmpregadoUtilizado =  new Empregado(novoEmpregado);
         listaEmpregados.add(novoEmpregado);
         Console.empregadoAdicionado();
         return true;
@@ -111,7 +110,8 @@ public class ControleEmpregados {
         } else {
             Empregado empregadoDaLista = recuperarEmpregadoPorId();
             if(empregadoDaLista != null) {
-                ultimoEmpregadoUtilizado = listaEmpregados.remove(listaEmpregados.indexOf(empregadoDaLista));
+                ultimoEmpregadoUtilizado = new Empregado(empregadoDaLista);
+                listaEmpregados.remove(empregadoDaLista);
                 Console.empregadoRemovido();
                 return true;
             } else {
@@ -130,41 +130,66 @@ public class ControleEmpregados {
         } else {
             Empregado empregadoDaLista = recuperarEmpregadoPorId();
 
-            if(empregadoDaLista != null && empregadoDaLista.eHorista()) {
+            if(empregadoDaLista != null) {
                 if(empregadoDaLista.eHorista()) {
 
+                    ultimoEmpregadoUtilizadoAuxiliar = new Empregado(empregadoDaLista); //CACHE TEMPORARIO
                     Console.menuRegistrarNoCartaoDePonto();
                     boolean entrada = Input.validarOperacaoBinaria();
 
                     if(entrada) { //RGISTRO DE ENTRADA
-                        for(Empregado atual: listaEmpregados) {
-                            if(empregadoDaLista.equals(atual)) {
-                                if(atual.criarCartaoDePonto()) {
-                                    //TODO ADICIONAR EM CACHE EMPREGADO SEM O REGISTRO DE ENTRADA
-                                    Console.entradaRegistrada();
-                                    return true;
-                                } else {
-                                    Console.entradaJaRegistrada();
-                                    return false;
-                                }
-                            }
+                        if(empregadoDaLista.criarCartaoDePonto()) {
+                            ultimoEmpregadoUtilizado = ultimoEmpregadoUtilizadoAuxiliar;
+                            Console.entradaRegistrada();
+                            return true;
+                        } else {
+                            Console.entradaJaRegistrada();
+                            return false;
                         }
                     } else {//RGISTRO DE SAIDA
-                        for(Empregado atual: listaEmpregados) {
-                            if(empregadoDaLista.equals(atual)) {
-                                if(atual.registrarSaidaNoCartaoDePonto()) {
-                                    //TODO ADICIONAR EM CACHE EMPREGADO SEM O REGISTRO DE SAIDA
-                                    Console.saidaRegistrada();
-                                    return true;
-                                } else {
-                                    return false;
-                                }
-                            }
+                        if(empregadoDaLista.registrarSaidaNoCartaoDePonto()) {
+                            ultimoEmpregadoUtilizado = ultimoEmpregadoUtilizadoAuxiliar;
+                            Console.saidaRegistrada();
+                            return true;
+                        } else {
+                            return false;
                         }
                     }
-                    return true;
                 } else {
                     Console.empregadoNaoHorista();
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    //RESULTADO DE VENDA
+    public boolean registrarResultadoDeVenda() {
+
+        if(listaEmpregados.isEmpty()) {
+            Console.listaVazia();
+            return false;
+        } else {
+            Empregado empregadoDaLista = recuperarEmpregadoPorId();
+
+            if(empregadoDaLista != null) {
+                if(empregadoDaLista.eComissionado()) {
+
+                    double valorVenda;
+
+                    ultimoEmpregadoUtilizadoAuxiliar = new Empregado(empregadoDaLista); //CACHE TEMPORARIO
+
+                    Console.solicitarValorDaVenda();
+                    valorVenda = Input.lerDouble();
+
+                    empregadoDaLista.adicionarResultadoDeVenda(valorVenda);
+                    Console.resultadoDeVendaRegistrado();
+                    return true;
+                } else {
+                    Console.empregadoNaoComissionado();
                     return false;
                 }
             } else {
@@ -183,24 +208,38 @@ public class ControleEmpregados {
                 return desfazer;
             case 1:
                 if(desfazer) {
-                    desfazerAdicionarEmpregado();
+                    removerEmpregadoNovamente();
+                    Console.adicionarDesfeito();
                 } else {
-                    refazerAdicionarEmpregado();
+                    adicionarEmpregadoNovamente();
+                    Console.adicionarRefeito();
                 }
                 break;
             case 2:
                 if(desfazer) {
-                    desfazerRemoverEmpregado();
+                    adicionarEmpregadoNovamente();
+                    Console.removerDesfeito();
                 } else {
-                    refazerRemoverEmpregado();
+                    removerEmpregadoNovamente();
+                    Console.removerRefeito();
                 }
                 break;
             case 3:
+                desfazerOuRefazerRegistroDeInformacao();
                 if(desfazer) {
-                    desfazerRegistrarNoCartaoDePonto();
+                    Console.registroNoCartaoDePontoDesfeito();
                 } else {
-                    refazerRegistrarNoCartaoDePonto();
+                    Console.registroNoCartaoDePontoRefeito();
                 }
+                break;
+            case 4:
+                desfazerOuRefazerRegistroDeInformacao();
+                if(desfazer) {
+                    Console.registroResultadoDeVendaDesfeito();
+                } else {
+                    Console.registroResultadoDeVendaRefeito();
+                }
+                break;
                 default:
                     return desfazer;
         }
@@ -208,35 +247,45 @@ public class ControleEmpregados {
         return !desfazer;
     }
 
-    private void desfazerAdicionarEmpregado() {
+    private void adicionarEmpregadoNovamente() {
 
-        listaEmpregados.remove(ultimoEmpregadoUtilizado);
-        Console.adicionarDesfeito();
+        listaEmpregados.add(new Empregado(ultimoEmpregadoUtilizado));
     }
 
-    private void refazerAdicionarEmpregado() {
+    private void removerEmpregadoNovamente() {
 
-        listaEmpregados.add(ultimoEmpregadoUtilizado);
-        Console.adicionarRefeito();
+        for(Empregado atual: listaEmpregados) {
+            if(ultimoEmpregadoUtilizado.getIdSistema() == atual.getIdSistema()) {
+                listaEmpregados.remove(atual);
+                break;
+            }
+        }
     }
 
-    private void desfazerRemoverEmpregado() {
+    private void desfazerOuRefazerRegistroDeInformacao() {
 
-        listaEmpregados.add(ultimoEmpregadoUtilizado);
-        Console.removerDesfeito();
+        for(Empregado atual: listaEmpregados) {
+            if(ultimoEmpregadoUtilizado.getIdSistema() == atual.getIdSistema()) {
+                ultimoEmpregadoUtilizadoAuxiliar = new Empregado(atual);
+                listaEmpregados.remove(atual);
+                listaEmpregados.add(new Empregado(ultimoEmpregadoUtilizado));
+                ultimoEmpregadoUtilizado = ultimoEmpregadoUtilizadoAuxiliar;
+                break;
+            }
+        }
     }
 
-    private void refazerRemoverEmpregado() {
 
-        listaEmpregados.remove(ultimoEmpregadoUtilizado);
-        Console.removerRefeito();
-    }
+    //RELATORIO EMPREGADOS
+    public void relatorio() {
 
-    private void desfazerRegistrarNoCartaoDePonto() {
-
-    }
-
-    private void refazerRegistrarNoCartaoDePonto() {
-
+        System.out.println("LISTA DE EMPREGADOS:");
+        if(!listaEmpregados.isEmpty()) {
+            for(Empregado atual: listaEmpregados) {
+                atual.infoRelatorio();
+            }
+        } else {
+            System.out.println("    Vazia.");
+        }
     }
 }

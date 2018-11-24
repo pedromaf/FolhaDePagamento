@@ -33,11 +33,13 @@ public class Empregado {
 
     public Empregado(String nome, String endereco, Tipo tipo, boolean sindicalizado, double taxaSindicato, double salario, double comissao, int idSistema, int idSindicato) {
 
+        taxasDeServico = new ArrayList<>();
+        cartoesDePonto = new ArrayList<>();
+        resultadosDeVendas = new ArrayList<>();
+
         if(tipo == Tipo.HORISTA) {
-            cartoesDePonto = new ArrayList<>();
             this.salarioHora = salario;
         } else if(tipo == Tipo.COMISSIONADO) {
-            resultadosDeVendas = new ArrayList<>();
             this.salarioMensal = salario;
             this.comissao = comissao;
         } else {
@@ -45,7 +47,6 @@ public class Empregado {
         }
 
         if(sindicalizado) {
-            taxasDeServico = new ArrayList<>();
             this.taxaSindicato = taxaSindicato;
             this.idSindicato = idSindicato;
         }
@@ -58,36 +59,58 @@ public class Empregado {
         this.formaDePagamento = FormaDePagamento.BANCO; //PADRAO
     }
 
-    public int getIdSistema() {
+    public Empregado(Empregado empregado) {
 
-        return this.idSistema;
+        this.cartoesDePonto = new ArrayList<>();
+        this.resultadosDeVendas = new ArrayList<>();
+        this.taxasDeServico = new ArrayList<>();
+
+        copiarCartoesDePonto(this.cartoesDePonto, empregado.cartoesDePonto);
+        copiarResultadosDeVenda(this.resultadosDeVendas, empregado.resultadosDeVendas);
+        copiarTaxasDeServico(this.taxasDeServico, empregado.taxasDeServico);
+
+        this.idSistema = empregado.idSistema;
+        this.nome = empregado.nome;
+        this.endereco = empregado.endereco;
+        this.tipo = empregado.tipo;
+        this.formaDePagamento = empregado.formaDePagamento;
+        this.salarioHora = empregado.salarioHora;
+        this.salarioMensal = empregado.salarioMensal;
+        this.comissao = empregado.comissao;
+        this.sindicalizado = empregado.sindicalizado;
+        this.idSindicato = empregado.idSindicato;
+        this.taxaSindicato = empregado.taxaSindicato;
     }
 
-    private String stringTipo() {
+    private void copiarCartoesDePonto(ArrayList<CartaoDePonto> novaLista, ArrayList<CartaoDePonto> lista) {
 
-        if(this.tipo == Tipo.ASSALARIADO) {
-            return "Assalariado";
-        } else if(this.tipo == Tipo.HORISTA) {
-            return "Horista";
-        } else {
-            return "Comissionado";
+        if(lista != null) {
+            for(CartaoDePonto atual: lista) {
+                novaLista.add(new CartaoDePonto(atual));
+            }
         }
     }
 
-    public String toString() {
+    private void copiarResultadosDeVenda(ArrayList<ResultadoDeVenda> novaLista, ArrayList<ResultadoDeVenda> lista) {
 
-        //return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")";
-        return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ") " + cartoesDePonto.size();//TESTE
-    }
-
-    public boolean eHorista() {
-
-        if(this.tipo == Tipo.HORISTA) {
-            return true;
+        if(lista != null) {
+            for(ResultadoDeVenda atual: lista) {
+                novaLista.add(new ResultadoDeVenda(atual));
+            }
         }
-        return false;
     }
 
+    private void copiarTaxasDeServico(ArrayList<TaxaDeServico> novaLista, ArrayList<TaxaDeServico> lista) {
+
+        if(lista != null) {
+            for(TaxaDeServico atual: lista) {
+                novaLista.add(new TaxaDeServico(atual));
+            }
+        }
+    }
+
+
+    //CARTAO DE PONTO
     public boolean criarCartaoDePonto() {
 
         if(cartoesDePonto != null) {
@@ -126,5 +149,101 @@ public class Empregado {
             return false;
         }
         return false;
+    }
+
+
+    //RESULTADO DE VENDA
+    public void adicionarResultadoDeVenda(double valorVenda) {
+
+        Data dataAtual = new Data();
+        resultadosDeVendas.add(new ResultadoDeVenda(valorVenda, dataAtual));
+    }
+
+
+
+    //GERAL
+    public int getIdSistema() {
+
+        return this.idSistema;
+    }
+
+    private String stringTipo() {
+
+        if(this.tipo == Tipo.ASSALARIADO) {
+            return "Assalariado";
+        } else if(this.tipo == Tipo.HORISTA) {
+            return "Horista";
+        } else {
+            return "Comissionado";
+        }
+    }
+
+    public String toString() {
+
+        return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")";
+    }
+
+    public boolean eHorista() {
+
+        return (this.tipo == Tipo.HORISTA);
+    }
+
+    public boolean eComissionado() {
+
+        return (this.tipo == Tipo.COMISSIONADO);
+
+    }
+
+
+    //RELATORIO (A FUNCAO RELATORIO NAO ESTA DE ACORDO COM A ORGANIZACAO MVC POR QUESTOES DE TEMPO)
+    public void infoRelatorio() {
+
+        System.out.println("[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")");
+        infoCartoesDePonto();
+        infoResultadoDeVendas();
+        infoTaxasDeServico();
+        System.out.println();
+    }
+
+    private void infoCartoesDePonto() {
+
+        System.out.println("    Cartoes de ponto:");
+        if(cartoesDePonto != null) {
+            if(!cartoesDePonto.isEmpty()) {
+                for(CartaoDePonto atual: cartoesDePonto) {
+                    atual.info();
+                }
+            } else {
+                System.out.println("    Nenhum.");
+            }
+        }
+    }
+
+    private void infoResultadoDeVendas() {
+
+        System.out.println("    Resultados de vendas:");
+        if(resultadosDeVendas != null) {
+            if(!resultadosDeVendas.isEmpty()) {
+                for(ResultadoDeVenda atual: resultadosDeVendas) {
+                    atual.info();
+                }
+            } else {
+                System.out.println("    Nenhum.");
+            }
+        }
+    }
+
+    private void infoTaxasDeServico() {
+
+        System.out.println("    Taxas de servico:");
+        if(taxasDeServico != null) {
+            if(!taxasDeServico.isEmpty()) {
+                for(TaxaDeServico atual: taxasDeServico) {
+                    atual.info();
+                }
+            } else {
+                System.out.println("    Nenhum.");
+            }
+        }
     }
 }
