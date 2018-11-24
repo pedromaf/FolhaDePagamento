@@ -40,6 +40,14 @@ public class Console {
         solicitarOpcao();
     }
 
+    public static void menuRegistrarNoCartaoDePonto() {
+
+        System.out.println("\nO empregado esta entrando ou saindo?");
+        System.out.println("[1] Entrando");
+        System.out.println("[2] Saindo");
+
+        solicitarOpcao();
+    }
 
 
     //SOLICITAR ENTRADA
@@ -102,6 +110,39 @@ public class Console {
     public static void empregadoRemovido() {
 
         System.out.println("Empregado removido!");
+    }
+
+
+
+    //REGISTRAR CARTAO DE PONTO
+    public static void empregadoNaoHorista() {
+
+        System.out.println("O empregado selecionado nao e horista.");
+    }
+
+    public static void entradaRegistrada() {
+
+        System.out.println("Entrada registrada!");
+    }
+
+    public static void entradaJaRegistrada() {
+
+        System.out.println("Este empregado ja registrou a entrada hoje.");
+    }
+
+    public static void saidaRegistrada() {
+
+        System.out.println("Saida registrada!");
+    }
+
+    public static void entradaAindaNaoRegistrada() {
+
+        System.out.println("Este empregado ainda nao registrou a entrada.");
+    }
+
+    public static void saidaJaRegistrada() {
+
+        System.out.println("Este empregado ja registrou a saida hoje.");
     }
 
 

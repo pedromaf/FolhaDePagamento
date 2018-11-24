@@ -41,7 +41,7 @@ public class Input {
         return percentual;
     }
 
-    public static boolean validarSindicalizado() {
+    public static boolean validarOperacaoBinaria() {
 
         if(validarOperacao(1,2) == 1) {
             return true;

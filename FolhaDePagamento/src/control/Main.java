@@ -27,7 +27,7 @@ public class Main {
                     operacaoRealizda = controleEmpregados.removerEmpregado();
                     break;
                 case 3:
-                    //TODO
+                    operacaoRealizda = controleEmpregados.registrarNoCartaoDePonto();
                     break;
                 case 4:
                     break;
@@ -51,8 +51,10 @@ public class Main {
 
             if(operacaoRealizda) {
                 ultimaOperacao = operacao;
+                desfazer = true;
             }
         } while(!sair);
-
     }
 }
+
+

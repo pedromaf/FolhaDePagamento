@@ -1,5 +1,7 @@
 package model;
 
+import view.Console;
+
 import java.util.ArrayList;
 
 public class Empregado {
@@ -60,8 +62,68 @@ public class Empregado {
         return this.idSistema;
     }
 
+    private String stringTipo() {
+
+        if(this.tipo == Tipo.ASSALARIADO) {
+            return "Assalariado";
+        } else if(this.tipo == Tipo.HORISTA) {
+            return "Horista";
+        } else {
+            return "Comissionado";
+        }
+    }
+
     public String toString() {
 
-        return "[" + this.idSistema + "] " + this.nome;
+        //return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")";
+        return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ") " + cartoesDePonto.size();//TESTE
+    }
+
+    public boolean eHorista() {
+
+        if(this.tipo == Tipo.HORISTA) {
+            return true;
+        }
+        return false;
+    }
+
+    public boolean criarCartaoDePonto() {
+
+        if(cartoesDePonto != null) {
+            Data dataAtual = new Data();
+
+            for(CartaoDePonto atual : cartoesDePonto) {
+                if(dataAtual.mesmoDia(atual.getEntrada())) {
+                    return false;
+                }
+            }
+
+            CartaoDePonto cartaoDePonto = new CartaoDePonto();
+            cartaoDePonto.registrarEntrada(dataAtual);
+            cartoesDePonto.add(cartaoDePonto);
+            return true;
+        }
+        return false;
+    }
+
+    public boolean registrarSaidaNoCartaoDePonto() {
+
+        if(cartoesDePonto != null) {
+            Data dataAtual = new Data();
+
+            for(CartaoDePonto atual : cartoesDePonto) {
+                if(dataAtual.mesmoDia(atual.getEntrada())) {
+                    if(atual.getSaida() == null) {
+                        atual.registrarSaida(dataAtual);
+                        return true;
+                    }
+                    Console.saidaJaRegistrada();
+                    return false;
+                }
+            }
+            Console.entradaAindaNaoRegistrada();
+            return false;
+        }
+        return false;
     }
 }
