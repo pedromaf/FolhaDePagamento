@@ -2,21 +2,25 @@ package model;
 
 public class TaxaDeServico {
 
-    private double percentual;
+    private double valor;
     private Data data;
 
-    public TaxaDeServico() {}
+    public TaxaDeServico(double valor, Data data) {
+
+        this.valor = valor;
+        this.data = data;
+    }
 
     public TaxaDeServico(TaxaDeServico taxaDeServico) {
 
-        this.percentual = taxaDeServico.percentual;
+        this.valor = taxaDeServico.valor;
         this.data = taxaDeServico.data;
     }
 
     public void info() {
 
         System.out.println("-----------------------------");
-        System.out.println("Valor: " + this.percentual);
+        System.out.println("Valor: " + this.valor);
         System.out.println("Data: " + this.data.toString());
         System.out.println("-----------------------------");
     }

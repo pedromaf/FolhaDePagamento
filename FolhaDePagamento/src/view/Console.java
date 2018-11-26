@@ -12,7 +12,7 @@ public class Console {
         System.out.println("[3]  Lancar cartao de ponto");
         System.out.println("[4]  Lancar resultado de venda");
         System.out.println("[5]  Lancar taxa de servico");
-        System.out.println("[6]  Alterar detalhes do empregado");
+        System.out.println("[6]  Alterar informacoes do empregado");
         System.out.println("[7]  Rodar folha de pagamento");
         System.out.println("[8]  Undo/Redo");
         System.out.println("[9]  Alterar agenda de pagamento do empregado");
@@ -50,7 +50,38 @@ public class Console {
         solicitarOpcao();
     }
 
+    public static void menuAlterarDados() {
 
+        System.out.println("\nQual informacao deseja alterar?");
+        System.out.println("[1] Nome");
+        System.out.println("[2] Endereco");
+        System.out.println("[3] Tipo");
+        System.out.println("[4] Forma de pagamento");
+        System.out.println("[5] Informacoes do sindicato");
+        System.out.println("[6] Voltar");
+
+        solicitarOpcao();
+    }
+
+    public static void menuInformacoesDoSindicato() {
+
+        System.out.println("\nQual informacao deseja alterar?");
+        System.out.println("[1] Associacao");
+        System.out.println("[2] Identificacao");
+        System.out.println("[3] Taxa sindical");
+
+        solicitarOpcao();
+    }
+
+    public static void menuFormaDePagamento() {
+
+        System.out.println("\nQual a nova forma de pagamento?");
+        System.out.println("[1] Cheque em maos");
+        System.out.println("[2] Cheque pelo correio");
+        System.out.println("[3] Deposito em conta bancaria");
+
+        solicitarOpcao();
+    }
 
     //SOLICITAR ENTRADA
     public static void solicitarOpcao() {
@@ -88,7 +119,7 @@ public class Console {
         System.out.println("Digite o percentual de comissao [0.0 ate 1.0]:");
     }
 
-    public static void solicitarTaxaSindicato() {
+    public static void solicitarTaxaSindical() {
 
         System.out.println("Digite o percentual da taxa sindical [0.0 ate 1.0]:");
     }
@@ -96,6 +127,11 @@ public class Console {
     public static void solicitarValorDaVenda() {
 
         System.out.println("Digite o valor da venda realizada:");
+    }
+
+    public static void solicitarValorDaTaxaDeServico() {
+
+        System.out.println("Digite o valor da taxa de servico:");
     }
 
 
@@ -166,6 +202,67 @@ public class Console {
     }
 
 
+
+    //REGISTRAR TAXA DE SERVICO
+    public static void empregadoNaoSindicalizado() {
+
+        System.out.println("O empregado selecionado nao pertence ao sindicato.");
+    }
+
+    public static void taxaDeServicoRegistrada() {
+
+        System.out.println("Taxa de servico registrada!");
+    }
+
+
+
+    //ALTERAR DADOS DO EMPREGADO
+    public static void nomeAlterado() {
+
+        System.out.println("Nome do empregado alterado!");
+    }
+
+    public static void enderecoAlterado() {
+
+        System.out.println("Endereco do empregado alterado!");
+    }
+
+    public static void tipoAlterado() {
+
+        System.out.println("Tipo do empregado alterado!");
+    }
+
+    public static void formaDePagamentoAlterada() {
+
+        System.out.println("Forma de pagamento do empregado alterada!");
+    }
+
+    public static void associacaoSindicalAlterada() {
+
+        System.out.println("Associacao sindical do empregado alterada!");
+    }
+
+    public static void identificacaoSindicalAlterada() {
+
+        System.out.println("Identificacao sindical do empregado alterada!");
+    }
+
+    public static void taxaSindicalAlterada() {
+
+        System.out.println("Taxa sindical do empregado alterada!");
+    }
+
+    public static void associouSindicato() {
+
+        System.out.println("Empregado agora esta associado ao sindicato.");
+    }
+
+    public static void desassociouSindicato() {
+
+        System.out.println("Empregado agora nao esta mais associado ao sindicato.");
+    }
+
+
     //DESFAZER/REFAZER
     public static void operacaoNaoRealizada() {
 
@@ -212,6 +309,25 @@ public class Console {
         System.out.println("Operacao refeita! Registro de resultado de venda adicionado.");
     }
 
+    public static void registroTaxaDeServicoDesfeito() {
+
+        System.out.println("Operacao desfeita! Registro de taxa de servico removido.");
+    }
+
+    public static void registroTaxaDeServicoRefeito() {
+
+        System.out.println("Operacao refeita! Registro de taxa de servico adicionado.");
+    }
+
+    public static void alteracaoDeDadosDesfeita() {
+
+        System.out.println("Operacao desfeita! Alteracao de informacoes removida.");
+    }
+
+    public static void alteracaoDeDadosRefeita() {
+
+        System.out.println("Operacao refeita! Alteracao de informacoes adicionada.");
+    }
 
     //GERAL
     public static void mostrarString(String string) {

@@ -81,4 +81,19 @@ public class Input {
                 return Empregado.Tipo.ASSALARIADO;
         }
     }
+
+    public static Empregado.FormaDePagamento lerFormaDePagamento() {
+
+        int opcao = validarOperacao(1,3);
+        switch(opcao) {
+            case 1:
+                return Empregado.FormaDePagamento.CHEQUE;
+            case 2:
+                return Empregado.FormaDePagamento.CORREIO;
+            case 3:
+                return Empregado.FormaDePagamento.BANCO;
+            default:
+                return Empregado.FormaDePagamento.BANCO;
+        }
+    }
 }

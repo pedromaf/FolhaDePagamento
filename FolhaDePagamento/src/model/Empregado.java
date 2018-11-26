@@ -1,6 +1,6 @@
 package model;
 
-//O acesso ao modulo view por parte dessa classe nao deveria acontecer, mas por motivos de simplificacao de codigo foi necessario. gg
+import control.Input;
 import view.Console;
 
 import java.util.ArrayList;
@@ -39,10 +39,14 @@ public class Empregado {
 
         if(tipo == Tipo.HORISTA) {
             this.salarioHora = salario;
+            this.salarioMensal = 0;
         } else if(tipo == Tipo.COMISSIONADO) {
             this.salarioMensal = salario;
+            this.salarioHora = 0;
             this.comissao = comissao;
         } else {
+            this.salarioHora = 0;
+            this.comissao = 0;
             this.salarioMensal = salario;
         }
 
@@ -110,6 +114,54 @@ public class Empregado {
     }
 
 
+    //SET
+    public void setNome(String novoNome) {
+
+        this.nome = novoNome;
+    }
+
+    public void setEndereco(String novoEndereco) {
+
+        this.endereco = novoEndereco;
+    }
+
+    public void setTipo(Tipo novoTipo) {
+
+        this.tipo = novoTipo;
+    }
+
+    public void setFormaDePagamento(FormaDePagamento novaFormaDePagamento) {
+
+        this.formaDePagamento = novaFormaDePagamento;
+    }
+
+    public void setSalarioMensal(double novoSalarioMensal) {
+
+        this.salarioMensal = novoSalarioMensal;
+        this.salarioHora = 0;
+    }
+
+    public void setSalarioHora(double novoSalarioHora) {
+
+        this.salarioHora = novoSalarioHora;
+        this.salarioMensal = 0;
+    }
+
+    public void setComissao(double novaComissao) {
+
+        this.comissao = novaComissao;
+    }
+
+    public void setIdSindicato(int novoIdSindicato) {
+
+        this.idSindicato = novoIdSindicato;
+    }
+
+    public void setTaxaSindical(double novaTaxaSindical) {
+
+        this.taxaSindicato = novaTaxaSindical;
+    }
+
     //CARTAO DE PONTO
     public boolean criarCartaoDePonto() {
 
@@ -160,6 +212,66 @@ public class Empregado {
     }
 
 
+    //TAXA DE SERVICO
+    public void adicionarTaxaDeServico(double valorTaxa) {
+
+        Data dataAtual = new Data();
+        taxasDeServico.add(new TaxaDeServico(valorTaxa, dataAtual));
+    }
+
+
+
+    //ALTERAR DADOS
+    public void alterarTipo(Tipo novoTipo) {
+
+        double novoSalario;
+
+        this.setTipo(novoTipo);
+
+        switch(novoTipo) {
+            case ASSALARIADO:
+                Console.solicitarSalarioMensal();
+                novoSalario = Input.lerDouble();
+
+                this.setSalarioMensal(novoSalario);
+                break;
+            case HORISTA:
+                Console.solicitarSalarioHora();
+                novoSalario = Input.lerDouble();
+
+                this.setSalarioHora(novoSalario);
+                break;
+            case COMISSIONADO:
+                double comissao;
+
+                Console.solicitarComissao();
+                comissao = Input.validarPercentual();
+
+                Console.solicitarSalarioMensal();
+                novoSalario = Input.lerDouble();
+
+                this.setSalarioMensal(novoSalario);
+                this.setComissao(comissao);
+        }
+    }
+
+    public void alterarSindicalizado(int idSindicato) {
+
+        if(this.sindicalizado) {
+            this.sindicalizado = false;
+            this.taxaSindicato = 0;
+            Console.desassociouSindicato();
+        } else {
+            this.sindicalizado = true;
+            this.idSindicato = idSindicato;
+
+            Console.associouSindicato();
+            Console.solicitarValorDaTaxaDeServico();
+            this.taxaSindicato = Input.validarPercentual();
+        }
+    }
+
+
 
     //GERAL
     public int getIdSistema() {
@@ -180,7 +292,7 @@ public class Empregado {
 
     public String toString() {
 
-        return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")";
+        return "[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")" + ((this.sindicalizado)?" {Sindicalizado}":"");
     }
 
     public boolean eHorista() {
@@ -194,11 +306,16 @@ public class Empregado {
 
     }
 
+    public boolean eSindicalizado() {
+
+        return sindicalizado;
+    }
+
 
     //RELATORIO (A FUNCAO RELATORIO NAO ESTA DE ACORDO COM A ORGANIZACAO MVC POR QUESTOES DE TEMPO)
     public void infoRelatorio() {
 
-        System.out.println("[" + this.idSistema + "] " + this.nome + " (" + stringTipo() + ")");
+        System.out.println(this.toString());
         infoCartoesDePonto();
         infoResultadoDeVendas();
         infoTaxasDeServico();
@@ -247,3 +364,4 @@ public class Empregado {
         }
     }
 }
+

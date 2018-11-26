@@ -89,7 +89,7 @@ public class ControleEmpregados {
 
         if(sindicalizado) {
             idSindicato = ++idSindicatoGeral;
-            Console.solicitarTaxaSindicato();
+            Console.solicitarTaxaSindical();
             taxaSindicato = Input.validarPercentual();
         }
 
@@ -186,6 +186,7 @@ public class ControleEmpregados {
                     valorVenda = Input.lerDouble();
 
                     empregadoDaLista.adicionarResultadoDeVenda(valorVenda);
+                    ultimoEmpregadoUtilizado = ultimoEmpregadoUtilizadoAuxiliar;
                     Console.resultadoDeVendaRegistrado();
                     return true;
                 } else {
@@ -199,14 +200,177 @@ public class ControleEmpregados {
     }
 
 
+    //TAXA DE SERVICO
+    public boolean registrarTaxaDeServico() {
+
+        if(listaEmpregados.isEmpty()) {
+            Console.listaVazia();
+            return false;
+        } else {
+            Empregado empregadoDaLista = recuperarEmpregadoPorId();
+
+            if(empregadoDaLista != null) {
+                if(empregadoDaLista.eSindicalizado()) {
+
+                    double valorTaxa;
+
+                    ultimoEmpregadoUtilizadoAuxiliar = new Empregado(empregadoDaLista); //CACHE TEMPORARIO
+
+                    Console.solicitarValorDaTaxaDeServico();
+                    valorTaxa = Input.lerDouble();
+
+                    empregadoDaLista.adicionarTaxaDeServico(valorTaxa);
+                    ultimoEmpregadoUtilizado = ultimoEmpregadoUtilizadoAuxiliar;
+                    Console.taxaDeServicoRegistrada();
+                    return true;
+                } else {
+                    Console.empregadoNaoSindicalizado();
+                    return false;
+                }
+            } else {
+                return false;
+            }
+        }
+    }
+
+
+    //ALTERAR DADOS DO EMPREGADO
+    public boolean alterarDadosDoEmpregado() {
+
+        if(listaEmpregados.isEmpty()) {
+            Console.listaVazia();
+            return false;
+        } else {
+            Empregado empregadoDaLista = recuperarEmpregadoPorId();
+            if(empregadoDaLista != null) {
+                ultimoEmpregadoUtilizadoAuxiliar = new Empregado(empregadoDaLista);//CACHE TEMPORARIO
+
+                int operacao;
+
+                Console.menuAlterarDados();
+                operacao = Input.validarOperacao(1,6);
+
+                switch(operacao) {
+                    case 1:
+                        alterarNome(empregadoDaLista);
+                        break;
+                    case 2:
+                        alterarEndereco(empregadoDaLista);
+                        break;
+                    case 3:
+                        alterarTipo(empregadoDaLista);
+                        break;
+                    case 4:
+                        alterarFormaDePagamento(empregadoDaLista);
+                        break;
+                    case 5:
+                        if(!alterarInformacoesSindicato(empregadoDaLista)) {
+                            return false;
+                        }
+                        break;
+                    case 6:
+                    default:
+                        return false;
+                }
+                ultimoEmpregadoUtilizado = ultimoEmpregadoUtilizadoAuxiliar;
+                return true;
+            } else {
+                return false;
+            }
+
+        }
+    }
+
+    private void alterarNome(Empregado empregado) {
+
+        String novoNome;
+
+        Console.solicitarNome();
+        novoNome = Input.lerString();
+
+        empregado.setNome(novoNome);
+        Console.nomeAlterado();
+    }
+
+    private void alterarEndereco(Empregado empregado) {
+
+        String novoEndereco;
+
+        Console.solicitarEndereco();
+        novoEndereco = Input.lerString();
+
+        empregado.setEndereco(novoEndereco);
+        Console.enderecoAlterado();
+    }
+
+    private void alterarTipo(Empregado empregado) {
+
+        Empregado.Tipo novoTipo;
+
+        Console.solicitarEndereco();
+        novoTipo = Input.lerTipoEmpregado();
+
+        empregado.alterarTipo(novoTipo);
+        Console.tipoAlterado();
+    }
+
+    private void alterarFormaDePagamento(Empregado empregado){
+
+        Empregado.FormaDePagamento novaFormaDePagamento;
+
+        Console.menuFormaDePagamento();
+        novaFormaDePagamento = Input.lerFormaDePagamento();
+
+        empregado.setFormaDePagamento(novaFormaDePagamento);
+        Console.formaDePagamentoAlterada();
+    }
+
+    private boolean alterarInformacoesSindicato(Empregado empregado) {
+
+        int operacao;
+
+        Console.menuInformacoesDoSindicato();
+        operacao = Input.validarOperacao(1,3);
+
+        switch(operacao) {
+            case 1:
+                empregado.alterarSindicalizado(++idSindicatoGeral);
+                Console.associacaoSindicalAlterada();
+                break;
+            case 2:
+                if(empregado.eSindicalizado()) {
+                    empregado.setIdSindicato(++idSindicatoGeral);
+                    Console.identificacaoSindicalAlterada();
+                } else {
+                    Console.empregadoNaoSindicalizado();
+                    return false;
+                }
+                break;
+            case 3:
+                if(empregado.eSindicalizado()) {
+                    double novaTaxaSindical;
+                    Console.solicitarTaxaSindical();
+                    novaTaxaSindical = Input.validarPercentual();
+                    empregado.setTaxaSindical(novaTaxaSindical);
+                    Console.taxaSindicalAlterada();
+                } else {
+                    Console.empregadoNaoSindicalizado();
+                    return false;
+                }
+        }
+
+        return true;
+    }
+
+
     //DESFAZER/REFAZER
     public boolean desfazerRefazer(int ultimaOperacao, boolean desfazer) {
 
         switch(ultimaOperacao) {
-            case 0:
+            case 0://NENHUMA OPERACAO REALIZADA PREVIAMENTE
                 Console.operacaoNaoRealizada();
                 return desfazer;
-            case 1:
+            case 1: //ADICIONAR EMPREGADO
                 if(desfazer) {
                     removerEmpregadoNovamente();
                     Console.adicionarDesfeito();
@@ -215,7 +379,7 @@ public class ControleEmpregados {
                     Console.adicionarRefeito();
                 }
                 break;
-            case 2:
+            case 2://REMOVER EMPREGADO
                 if(desfazer) {
                     adicionarEmpregadoNovamente();
                     Console.removerDesfeito();
@@ -224,7 +388,7 @@ public class ControleEmpregados {
                     Console.removerRefeito();
                 }
                 break;
-            case 3:
+            case 3://REGISTRO CARTAO DE PONTO
                 desfazerOuRefazerRegistroDeInformacao();
                 if(desfazer) {
                     Console.registroNoCartaoDePontoDesfeito();
@@ -232,7 +396,7 @@ public class ControleEmpregados {
                     Console.registroNoCartaoDePontoRefeito();
                 }
                 break;
-            case 4:
+            case 4://REGISTRO RESULTADO DE VENDA
                 desfazerOuRefazerRegistroDeInformacao();
                 if(desfazer) {
                     Console.registroResultadoDeVendaDesfeito();
@@ -240,8 +404,24 @@ public class ControleEmpregados {
                     Console.registroResultadoDeVendaRefeito();
                 }
                 break;
-                default:
-                    return desfazer;
+            case 5://REGISTRO TAXA DE SERVICO
+                desfazerOuRefazerRegistroDeInformacao();
+                if(desfazer) {
+                    Console.registroTaxaDeServicoDesfeito();
+                } else {
+                    Console.registroTaxaDeServicoRefeito();
+                }
+                break;
+            case 6://ALTERAR INFORMACAO DO EMPREGADO
+                desfazerOuRefazerRegistroDeInformacao();
+                if(desfazer) {
+                    Console.alteracaoDeDadosDesfeita();
+                } else {
+                    Console.alteracaoDeDadosRefeita();
+                }
+                break;
+            default:
+                return desfazer;
         }
 
         return !desfazer;

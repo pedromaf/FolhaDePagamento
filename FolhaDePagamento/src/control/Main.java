@@ -36,8 +36,10 @@ public class Main {
                     operacaoRealizda = controleEmpregados.registrarResultadoDeVenda();
                     break;
                 case 5:
+                    operacaoRealizda = controleEmpregados.registrarTaxaDeServico();
                     break;
                 case 6:
+                    operacaoRealizda = controleEmpregados.alterarDadosDoEmpregado();
                     break;
                 case 7:
                     break;
