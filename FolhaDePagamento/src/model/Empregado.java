@@ -23,10 +23,15 @@ public class Empregado {
     private String nome;
     private String endereco;
     private Tipo tipo;
+
+    private AgendaDePagamento agendaDePagamento;
+    private double saldo;
+
     private FormaDePagamento formaDePagamento;
     private double salarioHora;
     private double salarioMensal;
     private double comissao;
+
     private boolean sindicalizado;
     private int idSindicato;
     private double taxaSindicato;
@@ -40,14 +45,17 @@ public class Empregado {
         if(tipo == Tipo.HORISTA) {
             this.salarioHora = salario;
             this.salarioMensal = 0;
+            this.agendaDePagamento = new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, "Sex", 1);
         } else if(tipo == Tipo.COMISSIONADO) {
             this.salarioMensal = salario;
             this.salarioHora = 0;
             this.comissao = comissao;
+            this.agendaDePagamento = new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, "Sex", 2);
         } else {
             this.salarioHora = 0;
             this.comissao = 0;
             this.salarioMensal = salario;
+            this.agendaDePagamento = new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.MENSAL, "---", AgendaDePagamento.ULTIMO_DIA_UTIL);
         }
 
         if(sindicalizado) {
@@ -59,6 +67,7 @@ public class Empregado {
         this.nome = nome;
         this.endereco = endereco;
         this.tipo = tipo;
+        this.saldo = 0;
         this.sindicalizado = sindicalizado;
         this.formaDePagamento = FormaDePagamento.BANCO; //PADRAO
     }
@@ -77,6 +86,8 @@ public class Empregado {
         this.nome = empregado.nome;
         this.endereco = empregado.endereco;
         this.tipo = empregado.tipo;
+        empregado.agendaDePagamento.copiar(this.agendaDePagamento);
+        this.saldo = empregado.saldo;
         this.formaDePagamento = empregado.formaDePagamento;
         this.salarioHora = empregado.salarioHora;
         this.salarioMensal = empregado.salarioMensal;
@@ -112,6 +123,7 @@ public class Empregado {
             }
         }
     }
+
 
 
     //SET
@@ -162,6 +174,8 @@ public class Empregado {
         this.taxaSindicato = novaTaxaSindical;
     }
 
+
+
     //CARTAO DE PONTO
     public boolean criarCartaoDePonto() {
 
@@ -204,12 +218,14 @@ public class Empregado {
     }
 
 
+
     //RESULTADO DE VENDA
     public void adicionarResultadoDeVenda(double valorVenda) {
 
         Data dataAtual = new Data();
         resultadosDeVendas.add(new ResultadoDeVenda(valorVenda, dataAtual));
     }
+
 
 
     //TAXA DE SERVICO
@@ -273,6 +289,16 @@ public class Empregado {
 
 
 
+    //FOLHA DE PAGAMENTO
+    //TODO
+    public void pagar(Data hoje) {
+
+
+    }
+
+
+
+
     //GERAL
     public int getIdSistema() {
 
@@ -310,6 +336,7 @@ public class Empregado {
 
         return sindicalizado;
     }
+
 
 
     //RELATORIO (A FUNCAO RELATORIO NAO ESTA DE ACORDO COM A ORGANIZACAO MVC POR QUESTOES DE TEMPO)

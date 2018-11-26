@@ -1,5 +1,7 @@
 package control;
 
+import model.AgendaDePagamento;
+import model.Data;
 import model.Empregado;
 import view.*;
 
@@ -12,14 +14,17 @@ public class ControleEmpregados {
 
 
     private ArrayList<Empregado> listaEmpregados;
+    private ArrayList<AgendaDePagamento> listaAgendasDePagamento;
 
     //CACHE
+    private ArrayList<Empregado> ultimaListaEmpregados;
     private Empregado ultimoEmpregadoUtilizado;
     private Empregado ultimoEmpregadoUtilizadoAuxiliar;
 
     ControleEmpregados() {
 
         this.listaEmpregados = new ArrayList<>();
+        this.ultimaListaEmpregados = new ArrayList<>();
     }
 
     //GERAL
@@ -363,7 +368,30 @@ public class ControleEmpregados {
     }
 
 
+    //FOLHA DE PAGAMENTO
+    public boolean rodarFolhaDePagamento() {
+
+        if(listaEmpregados != null) {
+            if(listaEmpregados.isEmpty()) {
+                Console.listaVazia();
+                return false;
+            } else {
+                Data hoje = new Data();
+                if(!ultimaListaEmpregados.isEmpty()) {
+                    ultimaListaEmpregados.clear();
+                }
+                for(Empregado atual: listaEmpregados) {
+                    ultimaListaEmpregados.add(new Empregado(atual));
+                    atual.pagar(hoje);
+                }
+                return true;
+            }
+        }
+        return false;
+    }
+
     //DESFAZER/REFAZER
+    //TODO FOLHA DE PAGAMENTO
     public boolean desfazerRefazer(int ultimaOperacao, boolean desfazer) {
 
         switch(ultimaOperacao) {
@@ -420,6 +448,8 @@ public class ControleEmpregados {
                     Console.alteracaoDeDadosRefeita();
                 }
                 break;
+            /**TODO case 7: //FOLHA DE PAGAMENTO
+                break;**/
             default:
                 return desfazer;
         }

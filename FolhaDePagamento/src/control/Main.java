@@ -42,13 +42,16 @@ public class Main {
                     operacaoRealizda = controleEmpregados.alterarDadosDoEmpregado();
                     break;
                 case 7:
+                    operacaoRealizda = controleEmpregados.rodarFolhaDePagamento();
                     break;
                 case 8:
                     desfazer = controleEmpregados.desfazerRefazer(ultimaOperacao, desfazer);
                     break;
                 case 9:
+                    //TODO operacaoRealizda = controleEmpregados.agendaDePagamento();
                     break;
                 case 10:
+                    //TODO operacaoRealizda = controleEmpregados.criarAgendaDePagamento();
                     break;
                 case 11:
                     sair = true;
