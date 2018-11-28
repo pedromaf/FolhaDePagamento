@@ -413,10 +413,11 @@ public class Empregado {
     }
 
     //RELATORIO (A FUNCAO RELATORIO NAO ESTA DE ACORDO COM A ORGANIZACAO MVC POR QUESTOES DE TEMPO)
-    //TODO ADICIONAR O RESTO DAS INFORMACOES
     public void infoRelatorio() {
 
         System.out.println(this.toString());
+        System.out.println(this.agendaDePagamento.toString());
+        System.out.println("Saldo: R$" + this.saldo + "\n");
         infoCartoesDePonto();
         infoResultadoDeVendas();
         infoTaxasDeServico();
