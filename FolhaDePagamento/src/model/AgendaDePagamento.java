@@ -20,16 +20,29 @@ public class AgendaDePagamento {
     private int frequencia; /**SE tipoDePagamento = MENSAL, frequencia REPRESENTA OS DIAS DO MES [0,31] (0 = ULTIMO_DIA_UTIL)
                                SE tipoDePagamento = SEMANAL, frequencia REPRESENTA A QUANTIDADE DE SEMANAS ENTRE OS PAGAMENTOS [1,4]**/
 
-    public AgendaDePagamento() {}
+    public AgendaDePagamento() {
 
-    public AgendaDePagamento(TipoDePagamento tipoDePagamento, int diaDaSemana, int frequencia) {
+        this.tipoDePagamento = TipoDePagamento.MENSAL;
+        this.diaDaSemana = 0;
+        this.frequencia = 0;
+        this.ultimoPagamento = new Data();
+        this.proximoPagamento = new Data();
+    }
 
-        this.identificacao = ++identificacaoGeral;
+    public AgendaDePagamento(boolean modelo, TipoDePagamento tipoDePagamento, int diaDaSemana, int frequencia) {
+
         this.tipoDePagamento = tipoDePagamento;
         this.diaDaSemana = diaDaSemana;
         this.frequencia = frequencia;
         this.ultimoPagamento = new Data();
-        calcularProximoPagamento();
+
+        if(modelo) {
+            this.identificacao = ++identificacaoGeral;
+            this.proximoPagamento = new Data();
+        } else {
+            calcularProximoPagamento();
+            this.identificacao = 0;
+        }
     }
 
     public int getIdentificacao() {
@@ -163,7 +176,13 @@ public class AgendaDePagamento {
 
     public String toString() {
 
-        return "Ultimo pagamento: " + this.ultimoPagamento.toString() + "\n" +
+        String ultimoPagamento;
+        if(this.ultimoPagamento == null) {
+            ultimoPagamento = "---";
+        } else {
+            ultimoPagamento = this.ultimoPagamento.toString();
+        }
+        return "Ultimo pagamento: " + ultimoPagamento + "\n" +
                 "Proximo pagamento: " + this.proximoPagamento.toString() + "\n" +
                 "Tipo de pagamento: " + tipoDePagamentoString() + "\n" +
                 "Dia da semana: " + diaDaSemanaString() + "\n" +

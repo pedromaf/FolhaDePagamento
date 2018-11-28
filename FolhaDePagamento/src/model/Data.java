@@ -6,13 +6,13 @@ public class Data {
 
     private int diaDaSemana = 0;//DOMINGO = 1 -> SABADO = 7
 
-    private int dia;
-    private int mes;
-    private int ano;
+    private int dia = 0;
+    private int mes = 0;
+    private int ano = 0;
 
-    private int hora;
-    private int minuto;
-    private int segundo;
+    private int hora = 0;
+    private int minuto = 0;
+    private int segundo = 0;
 
     public Data() {
 

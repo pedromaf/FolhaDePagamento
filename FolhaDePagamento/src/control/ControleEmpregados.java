@@ -30,9 +30,9 @@ public class ControleEmpregados {
         this.listaAgendasDePagamento = new ArrayList<>();
 
         //INICIALIZAR AGENDAS DE PAGAMENTO PADRAO
-        listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, 6, 1));                      //HORISTA PADRAO [1]
-        listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, 6, 2));                      //COMISSIONADO PADRAO [2]
-        listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.MENSAL, 0, AgendaDePagamento.ULTIMO_DIA_UTIL)); //ASSALARIADO PADRAO [3]
+        listaAgendasDePagamento.add(new AgendaDePagamento(true, AgendaDePagamento.TipoDePagamento.SEMANAL, 6, 1));                      //HORISTA PADRAO [1]
+        listaAgendasDePagamento.add(new AgendaDePagamento(true, AgendaDePagamento.TipoDePagamento.SEMANAL, 6, 2));                      //COMISSIONADO PADRAO [2]
+        listaAgendasDePagamento.add(new AgendaDePagamento(true, AgendaDePagamento.TipoDePagamento.MENSAL, 0, AgendaDePagamento.ULTIMO_DIA_UTIL)); //ASSALARIADO PADRAO [3]
     }
 
     //GERAL
@@ -607,13 +607,13 @@ public class ControleEmpregados {
         if(mensal) {
             Console.solicitarDiaDoPagamento();
             frequencia = Input.validarOperacao(0, 31);
-            listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.MENSAL, 0, frequencia));
+            listaAgendasDePagamento.add(new AgendaDePagamento(true, AgendaDePagamento.TipoDePagamento.MENSAL, 0, frequencia));
         } else {
             Console.solicitarIntervaloSemanal();
             frequencia = Input.validarOperacao(1, 4);
             Console.solicitarDiaDaSemana();
             diaDaSemana = Input.validarOperacao(1,7);
-            listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, diaDaSemana, frequencia));
+            listaAgendasDePagamento.add(new AgendaDePagamento(true, AgendaDePagamento.TipoDePagamento.SEMANAL, diaDaSemana, frequencia));
         }
 
         Console.agendaDePagamentoCriada();
