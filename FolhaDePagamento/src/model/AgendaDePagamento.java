@@ -25,24 +25,21 @@ public class AgendaDePagamento {
         this.tipoDePagamento = TipoDePagamento.MENSAL;
         this.diaDaSemana = 0;
         this.frequencia = 0;
-        this.ultimoPagamento = new Data();
-        this.proximoPagamento = new Data();
     }
 
-    public AgendaDePagamento(boolean modelo, TipoDePagamento tipoDePagamento, int diaDaSemana, int frequencia) {
+    public AgendaDePagamento(TipoDePagamento tipoDePagamento, int diaDaSemana, int frequencia) {
 
+        this.identificacao = ++identificacaoGeral;
         this.tipoDePagamento = tipoDePagamento;
         this.diaDaSemana = diaDaSemana;
         this.frequencia = frequencia;
-        this.ultimoPagamento = new Data();
+    }
 
-        if(modelo) {
-            this.identificacao = ++identificacaoGeral;
-            this.proximoPagamento = new Data();
-        } else {
-            calcularProximoPagamento();
-            this.identificacao = 0;
-        }
+    public void gerarPrimeiroPagamento() {
+
+        setUltimoPagamento(new Data());
+        calcularProximoPagamento();
+        this.ultimoPagamento = null;
     }
 
     public int getIdentificacao() {
@@ -90,12 +87,16 @@ public class AgendaDePagamento {
 
     public void calcularProximoPagamento() {
 
+        if(this.ultimoPagamento == null) {
+            this.ultimoPagamento = new Data();
+        }
         int mes = this.ultimoPagamento.getMes();
         int ano = this.ultimoPagamento.getAno();
         int dia = this.ultimoPagamento.getDia();
         int diaSemana = this.ultimoPagamento.getDiaDaSemana();
 
         if(this.tipoDePagamento == TipoDePagamento.MENSAL) {
+            System.out.println("ENTROU AQUI");
             mes = incrementarVariavel(mes, 12);
             if(mes == 1) {
                 ano++;
@@ -122,8 +123,8 @@ public class AgendaDePagamento {
                     break;
                 }
             }
-            this.proximoPagamento = new Data(diaSemana, dia, mes, ano);
         }
+        this.proximoPagamento = new Data(diaSemana, dia, mes, ano);
     }
 
     private int incrementarVariavel(int variavel, int limite) {
@@ -131,7 +132,7 @@ public class AgendaDePagamento {
         if(variavel == limite) {
             return 1;
         }
-        return ++variavel;
+        return (variavel+1);
     }
 
     private String tipoDePagamentoString() {
@@ -168,7 +169,7 @@ public class AgendaDePagamento {
     private String frequenciaString() {
 
         if(this.tipoDePagamento == TipoDePagamento.MENSAL) {
-            return "Dia do mes: " + this.frequencia;
+            return "Dia do mes: " + ((this.frequencia > 1)?this.frequencia:"Ultimo dia util");
         } else {
             return "Pagamento a cada " + this.frequencia + ((this.frequencia > 1)?"Semanas":"Semana");
         }
@@ -177,13 +178,19 @@ public class AgendaDePagamento {
     public String toString() {
 
         String ultimoPagamento;
+        String proximoPagamento;
         if(this.ultimoPagamento == null) {
             ultimoPagamento = "---";
         } else {
             ultimoPagamento = this.ultimoPagamento.toString();
         }
+        if(this.proximoPagamento == null) {
+            proximoPagamento = "---";
+        } else {
+            proximoPagamento = this.proximoPagamento.toString();
+        }
         return "Ultimo pagamento: " + ultimoPagamento + "\n" +
-                "Proximo pagamento: " + this.proximoPagamento.toString() + "\n" +
+                "Proximo pagamento: " + proximoPagamento + "\n" +
                 "Tipo de pagamento: " + tipoDePagamentoString() + "\n" +
                 "Dia da semana: " + diaDaSemanaString() + "\n" +
                 frequenciaString() + "\n";
@@ -208,9 +215,10 @@ public class AgendaDePagamento {
 
         if(this.proximoPagamento.mesmoDia(diaDePagamento)) {
             if(!this.ultimoPagamento.mesmoDia(diaDePagamento)) {
-                Data auxiliar = proximoPagamento;
+                Data auxiliar = new Data();
+                proximoPagamento.copiar(auxiliar);
                 calcularProximoPagamento();
-                this.ultimoPagamento = auxiliar;
+                auxiliar.copiar(this.ultimoPagamento);
                 return true;
             }
         }
