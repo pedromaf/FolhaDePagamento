@@ -395,7 +395,21 @@ public class Empregado {
     //AGENDA DE PAGAMENTO
     public boolean setAgendaDePagamento(AgendaDePagamento novaAgendaDePagamento) {
 
-        //TODO
+        if(novaAgendaDePagamento.getTipoDePagamento() == AgendaDePagamento.TipoDePagamento.MENSAL) {
+            if(this.tipo == Tipo.ASSALARIADO) {
+                novaAgendaDePagamento.setUltimoPagamento(this.agendaDePagamento.getUltimoPagamento());
+                return true;
+            } else {
+                return false;
+            }
+        } else {
+            if(this.tipo != Tipo.ASSALARIADO) {
+                novaAgendaDePagamento.setUltimoPagamento(this.agendaDePagamento.getUltimoPagamento());
+                return true;
+            } else {
+                return false;
+            }
+        }
     }
 
     //RELATORIO (A FUNCAO RELATORIO NAO ESTA DE ACORDO COM A ORGANIZACAO MVC POR QUESTOES DE TEMPO)

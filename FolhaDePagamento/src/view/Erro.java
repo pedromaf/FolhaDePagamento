@@ -5,7 +5,7 @@ public class Erro {
     //ENTRADA INVALIDA
     public static void operacaoInvalida(int limite1, int limite2) {
 
-        System.out.println("Opcao invalida! Digite valores inteiros entre " + limite1 + " e " + limite2 + ".");
+        System.out.println("Entrada invalida! Digite valores inteiros entre " + limite1 + " e " + limite2 + ".");
     }
 
     public static void percentualInvalido() {

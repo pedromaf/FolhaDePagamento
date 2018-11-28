@@ -62,22 +62,22 @@
       </usages-collector>
       <usages-collector id="statistics.file.extensions.open">
         <counts>
-          <entry key="java" value="78" />
+          <entry key="java" value="81" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="JAVA" value="78" />
+          <entry key="JAVA" value="81" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="java" value="26837" />
+          <entry key="java" value="28399" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="JAVA" value="26837" />
+          <entry key="JAVA" value="28399" />
         </counts>
       </usages-collector>
     </session>
@@ -88,7 +88,7 @@
         <entry file="file://$PROJECT_DIR$/src/control/Main.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="544">
-              <caret line="53" column="36" lean-forward="true" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+              <caret line="53" column="64" lean-forward="true" selection-start-line="53" selection-start-column="64" selection-end-line="53" selection-end-column="64" />
             </state>
           </provider>
         </entry>
@@ -96,8 +96,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/control/ControleEmpregados.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="653">
-              <caret line="592" column="73" lean-forward="true" selection-start-line="592" selection-start-column="73" selection-end-line="592" selection-end-column="73" />
+            <state relative-caret-position="738">
+              <caret line="618" column="41" selection-start-line="618" selection-start-column="16" selection-end-line="618" selection-end-column="41" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="method#ControleEmpregados#0;class#ControleEmpregados#0" />
@@ -121,6 +121,7 @@
                 <element signature="method#removerEmpregadoNovamente#0;class#ControleEmpregados#0" />
                 <element signature="method#desfazerOuRefazerRegistroDeInformacao#0;class#ControleEmpregados#0" />
                 <element signature="method#desfazerOuRefazerFolhaDePagamento#0;class#ControleEmpregados#0" />
+                <element signature="method#alterarAgendaDePagamento#0;class#ControleEmpregados#0" />
                 <element signature="method#relatorio#0;class#ControleEmpregados#0" />
               </folding>
             </state>
@@ -128,23 +129,10 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/view/Erro.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="272">
-              <caret line="22" column="75" selection-start-line="22" selection-start-column="75" selection-end-line="22" selection-end-column="75" />
-              <folding>
-                <element signature="method#operacaoInvalida#0;class#Erro#0" />
-                <element signature="method#percentualInvalido#0;class#Erro#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/model/Empregado.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="215">
-              <caret line="384" lean-forward="true" selection-start-line="384" selection-end-line="384" />
+            <state relative-caret-position="316">
+              <caret line="412" column="5" lean-forward="true" selection-start-line="412" selection-start-column="5" selection-end-line="412" selection-end-column="5" />
               <folding>
                 <element signature="imports" expanded="true" />
                 <element signature="e#2032#3107#0" />
@@ -161,6 +149,28 @@
                 <element signature="e#8438#8725#0" />
                 <element signature="e#8937#9212#0" />
                 <element signature="e#8727#9048#0" />
+                <element signature="e#10751#11314#0" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/model/AgendaDePagamento.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="527">
+              <caret line="31" column="35" lean-forward="true" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
+              <folding>
+                <element signature="method#getIdentificacao#0;class#AgendaDePagamento#0" />
+                <element signature="method#copiar#0;class#AgendaDePagamento#0" />
+                <element signature="method#calcularProximoPagamento#0;class#AgendaDePagamento#0" />
+                <element signature="method#incrementarVariavel#0;class#AgendaDePagamento#0" />
+                <element signature="method#tipoDePagamentoString#0;class#AgendaDePagamento#0" />
+                <element signature="method#diaDaSemanaString#0;class#AgendaDePagamento#0" />
+                <element signature="method#frequenciaString#0;class#AgendaDePagamento#0" />
+                <element signature="method#toString#0;class#AgendaDePagamento#0" />
+                <element signature="method#descricao#0;class#AgendaDePagamento#0" />
+                <element signature="method#pagar#0;class#AgendaDePagamento#0" />
               </folding>
             </state>
           </provider>
@@ -179,32 +189,11 @@
           </provider>
         </entry>
       </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/model/AgendaDePagamento.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="330">
-              <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
-              <folding>
-                <element signature="method#getIdentificacao#0;class#AgendaDePagamento#0" />
-                <element signature="method#copiar#0;class#AgendaDePagamento#0" />
-                <element signature="method#calcularProximoPagamento#0;class#AgendaDePagamento#0" />
-                <element signature="method#incrementarVariavel#0;class#AgendaDePagamento#0" />
-                <element signature="method#tipoDePagamentoString#0;class#AgendaDePagamento#0" />
-                <element signature="method#diaDaSemanaString#0;class#AgendaDePagamento#0" />
-                <element signature="method#frequenciaString#0;class#AgendaDePagamento#0" />
-                <element signature="method#toString#0;class#AgendaDePagamento#0" />
-                <element signature="method#descricao#0;class#AgendaDePagamento#0" />
-                <element signature="method#pagar#0;class#AgendaDePagamento#0" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/view/Console.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-11">
-              <caret line="63" column="5" lean-forward="true" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+            <state relative-caret-position="449">
+              <caret line="311" column="55" selection-start-line="311" selection-start-column="55" selection-end-line="311" selection-end-column="55" />
               <folding>
                 <element signature="e#44#857#0" />
                 <element signature="e#863#1139#0" />
@@ -213,6 +202,7 @@
                 <element signature="e#1618#2036#0" />
                 <element signature="e#2042#2334#0" />
                 <element signature="e#2340#2649#0" />
+                <element signature="e#2682#2970#0" />
               </folding>
             </state>
           </provider>
@@ -247,12 +237,12 @@
         <option value="$PROJECT_DIR$/src/model/TaxaDeServico.java" />
         <option value="$PROJECT_DIR$/src/model/ResultadoDeVenda.java" />
         <option value="$PROJECT_DIR$/src/model/CartaoDePonto.java" />
-        <option value="$PROJECT_DIR$/src/control/Main.java" />
-        <option value="$PROJECT_DIR$/src/model/AgendaDePagamento.java" />
-        <option value="$PROJECT_DIR$/src/view/Console.java" />
-        <option value="$PROJECT_DIR$/src/view/Erro.java" />
-        <option value="$PROJECT_DIR$/src/control/ControleEmpregados.java" />
         <option value="$PROJECT_DIR$/src/model/Empregado.java" />
+        <option value="$PROJECT_DIR$/src/control/Main.java" />
+        <option value="$PROJECT_DIR$/src/view/Erro.java" />
+        <option value="$PROJECT_DIR$/src/model/AgendaDePagamento.java" />
+        <option value="$PROJECT_DIR$/src/control/ControleEmpregados.java" />
+        <option value="$PROJECT_DIR$/src/view/Console.java" />
       </list>
     </option>
   </component>
@@ -315,7 +305,7 @@
   <component name="PropertiesComponent">
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543372262057" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1543373820093" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="project.structure.last.edited" value="Project" />
     <property name="project.structure.proportion" value="0.0" />
@@ -467,24 +457,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/control/Input.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="493">
-          <caret line="84" column="56" lean-forward="true" selection-start-line="84" selection-start-column="56" selection-end-line="84" selection-end-column="56" />
-          <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="method#validarOperacao#0;class#Input#0" />
-            <element signature="method#validarPercentual#0;class#Input#0" />
-            <element signature="method#validarOperacaoBinaria#0;class#Input#0" />
-            <element signature="method#lerString#0;class#Input#0" />
-            <element signature="method#lerDouble#0;class#Input#0" />
-            <element signature="method#lerInt#0;class#Input#0" />
-            <element signature="method#lerTipoEmpregado#0;class#Input#0" />
-            <element signature="method#lerFormaDePagamento#0;class#Input#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="jar://C:/Program Files/Java/jdk-11.0.1/lib/src.zip!/java.base/java/util/ArrayList.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="353">
@@ -539,41 +511,66 @@
     <entry file="file://$PROJECT_DIR$/src/control/Main.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="544">
-          <caret line="53" column="36" lean-forward="true" selection-start-line="53" selection-start-column="36" selection-end-line="53" selection-end-column="36" />
+          <caret line="53" column="64" lean-forward="true" selection-start-line="53" selection-start-column="64" selection-end-line="53" selection-end-column="64" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/view/Erro.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="272">
-          <caret line="22" column="75" selection-start-line="22" selection-start-column="75" selection-end-line="22" selection-end-column="75" />
+        <state relative-caret-position="119">
+          <caret line="7" column="44" selection-start-line="7" selection-start-column="44" selection-end-line="7" selection-end-column="44" />
           <folding>
-            <element signature="method#operacaoInvalida#0;class#Erro#0" />
             <element signature="method#percentualInvalido#0;class#Erro#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/view/Console.java">
+    <entry file="file://$PROJECT_DIR$/src/control/Input.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-11">
-          <caret line="63" column="5" lean-forward="true" selection-start-line="63" selection-start-column="5" selection-end-line="63" selection-end-column="5" />
+        <state relative-caret-position="340">
+          <caret line="20" column="32" selection-start-line="20" selection-start-column="32" selection-end-line="20" selection-end-column="32" />
           <folding>
-            <element signature="e#44#857#0" />
-            <element signature="e#863#1139#0" />
-            <element signature="e#1145#1365#0" />
-            <element signature="e#1371#1612#0" />
-            <element signature="e#1618#2036#0" />
-            <element signature="e#2042#2334#0" />
-            <element signature="e#2340#2649#0" />
+            <element signature="imports" expanded="true" />
+            <element signature="method#validarPercentual#0;class#Input#0" />
+            <element signature="method#validarOperacaoBinaria#0;class#Input#0" />
+            <element signature="method#lerString#0;class#Input#0" />
+            <element signature="method#lerDouble#0;class#Input#0" />
+            <element signature="method#lerInt#0;class#Input#0" />
+            <element signature="method#lerTipoEmpregado#0;class#Input#0" />
+            <element signature="method#lerFormaDePagamento#0;class#Input#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/model/Empregado.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="316">
+          <caret line="412" column="5" lean-forward="true" selection-start-line="412" selection-start-column="5" selection-end-line="412" selection-end-column="5" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#2032#3107#0" />
+            <element signature="e#3113#3378#0" />
+            <element signature="e#3384#3664#0" />
+            <element signature="e#3670#3935#0" />
+            <element signature="e#4956#5507#0" />
+            <element signature="e#5513#6153#0" />
+            <element signature="e#6161#6365#0" />
+            <element signature="e#6373#6562#0" />
+            <element signature="e#6570#7499#0" />
+            <element signature="e#7505#7981#0" />
+            <element signature="e#7989#8273#0" />
+            <element signature="e#8438#8725#0" />
+            <element signature="e#8937#9212#0" />
+            <element signature="e#8727#9048#0" />
+            <element signature="e#10751#11314#0" />
           </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/model/AgendaDePagamento.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="330">
-          <caret line="33" lean-forward="true" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="527">
+          <caret line="31" column="35" lean-forward="true" selection-start-line="31" selection-start-column="35" selection-end-line="31" selection-end-column="35" />
           <folding>
             <element signature="method#getIdentificacao#0;class#AgendaDePagamento#0" />
             <element signature="method#copiar#0;class#AgendaDePagamento#0" />
@@ -591,8 +588,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/control/ControleEmpregados.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="653">
-          <caret line="592" column="73" lean-forward="true" selection-start-line="592" selection-start-column="73" selection-end-line="592" selection-end-column="73" />
+        <state relative-caret-position="738">
+          <caret line="618" column="41" selection-start-line="618" selection-start-column="16" selection-end-line="618" selection-end-column="41" />
           <folding>
             <element signature="imports" expanded="true" />
             <element signature="method#ControleEmpregados#0;class#ControleEmpregados#0" />
@@ -616,31 +613,25 @@
             <element signature="method#removerEmpregadoNovamente#0;class#ControleEmpregados#0" />
             <element signature="method#desfazerOuRefazerRegistroDeInformacao#0;class#ControleEmpregados#0" />
             <element signature="method#desfazerOuRefazerFolhaDePagamento#0;class#ControleEmpregados#0" />
+            <element signature="method#alterarAgendaDePagamento#0;class#ControleEmpregados#0" />
             <element signature="method#relatorio#0;class#ControleEmpregados#0" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/model/Empregado.java">
+    <entry file="file://$PROJECT_DIR$/src/view/Console.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="215">
-          <caret line="384" lean-forward="true" selection-start-line="384" selection-end-line="384" />
+        <state relative-caret-position="449">
+          <caret line="311" column="55" selection-start-line="311" selection-start-column="55" selection-end-line="311" selection-end-column="55" />
           <folding>
-            <element signature="imports" expanded="true" />
-            <element signature="e#2032#3107#0" />
-            <element signature="e#3113#3378#0" />
-            <element signature="e#3384#3664#0" />
-            <element signature="e#3670#3935#0" />
-            <element signature="e#4956#5507#0" />
-            <element signature="e#5513#6153#0" />
-            <element signature="e#6161#6365#0" />
-            <element signature="e#6373#6562#0" />
-            <element signature="e#6570#7499#0" />
-            <element signature="e#7505#7981#0" />
-            <element signature="e#7989#8273#0" />
-            <element signature="e#8438#8725#0" />
-            <element signature="e#8937#9212#0" />
-            <element signature="e#8727#9048#0" />
+            <element signature="e#44#857#0" />
+            <element signature="e#863#1139#0" />
+            <element signature="e#1145#1365#0" />
+            <element signature="e#1371#1612#0" />
+            <element signature="e#1618#2036#0" />
+            <element signature="e#2042#2334#0" />
+            <element signature="e#2340#2649#0" />
+            <element signature="e#2682#2970#0" />
           </folding>
         </state>
       </provider>

@@ -51,7 +51,7 @@ public class Main {
                     controleEmpregados.alterarAgendaDePagamento();
                     break;
                 case 10:
-                    //TODO controleEmpregados.criarAgendaDePagamento();
+                    controleEmpregados.criarAgendaDePagamento();
                     break;
                 case 11:
                     sair = true;

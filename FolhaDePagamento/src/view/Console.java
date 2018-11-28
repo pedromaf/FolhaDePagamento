@@ -83,7 +83,30 @@ public class Console {
         solicitarOpcao();
     }
 
+    public static void menuCriarAgendaDePagamento() {
+
+        System.out.println("\nQual o tipo de pagamento da nova agenda?");
+        System.out.println("[1] Mensal");
+        System.out.println("[2] Semanal");
+
+        solicitarOpcao();
+    }
+
     //SOLICITAR ENTRADA
+    public static void solicitarDiaDaSemana() {
+
+        System.out.println("Digite o dia da semana [1,7] (1 = domingo, 7 = sabado):");
+    }
+    public static void solicitarIntervaloSemanal() {
+
+        System.out.println("Digite o intervalo semanal do pagamento [0, 4]:");
+    }
+
+    public static void solicitarDiaDoPagamento() {
+
+        System.out.println("Digite o dia do pagamento [0,31] (0 = ultimo dia util):");
+    }
+
     public static void solicitarOpcao() {
 
         System.out.println("\nDigite a opcao desejada:");
@@ -276,6 +299,18 @@ public class Console {
         System.out.println("A folha de pagamento ja foi executada hoje.");
     }
 
+
+
+    //AGENDA DE PAGAMENTO
+    public static void agendaDePagamentoIncompativel() {
+
+        System.out.println("Agenda de pagamento incompativel com o tipo do empregado!");
+    }
+
+    public static void agendaDePagamentoCriada() {
+
+        System.out.println("Agenda de pagamento criada!");
+    }
 
     //DESFAZER/REFAZER
     public static void operacaoNaoRealizada() {

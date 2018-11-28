@@ -42,6 +42,22 @@ public class AgendaDePagamento {
         return this.frequencia;
     }
 
+    public Data getUltimoPagamento() {
+
+        return this.ultimoPagamento;
+    }
+
+    public void setUltimoPagamento(Data novoUltimoPagamento) {
+
+        this.ultimoPagamento = novoUltimoPagamento;
+        calcularProximoPagamento();
+    }
+
+    public TipoDePagamento getTipoDePagamento() {
+
+        return this.tipoDePagamento;
+    }
+
     public void copiar(AgendaDePagamento agendaDePagamento) {
 
         agendaDePagamento.identificacao = this.identificacao;
