@@ -2,15 +2,37 @@ package model;
 
 public class CartaoDePonto {
 
+    private boolean descontado;
     private Data entrada;
     private Data saida;
 
-    public CartaoDePonto() {}
+    public CartaoDePonto() {
+
+        this.descontado = false;
+    }
 
     public CartaoDePonto(CartaoDePonto cartaoDePonto) {
 
+        this.descontado = cartaoDePonto.descontado;
         this.entrada = cartaoDePonto.entrada;
         this.saida = cartaoDePonto.saida;
+    }
+
+    public double horasTrabalhadas() {
+
+        if(this.saida != null) {
+            int hora = this.saida.getHora() - this.entrada.getHora();
+            int minuto = this.saida.getMinuto() - this.entrada.getMinuto();
+
+            if(minuto < 0) {
+                hora -= 1;
+                minuto = 60 - minuto;
+            }
+
+            return (((double)minuto/60) + hora);
+        } else {
+            return 0;
+        }
     }
 
     public void registrarEntrada(Data entrada) {
@@ -37,9 +59,21 @@ public class CartaoDePonto {
         return this.saida;
     }
 
+    public boolean descontar() {
+
+        if(!descontado) {
+            descontado = true;
+            return true;
+        }
+        return false;
+    }
+
     public void info() {
 
         System.out.println("-----------------------------");
+        if(this.descontado) {
+            System.out.println("[PAGO]\n");
+        }
         System.out.println("Entrada: " + entrada.toString());
         if(this.saida != null) {
             System.out.println("Saida: " + saida.toString());

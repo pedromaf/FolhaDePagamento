@@ -15,8 +15,10 @@ public class ControleEmpregados {
 
     private ArrayList<Empregado> listaEmpregados;
     private ArrayList<AgendaDePagamento> listaAgendasDePagamento;
+    private Data ultimoDiaDePagamento;
 
     //CACHE
+    private Data ultimoDiaDePagamentoAuxiliar;
     private ArrayList<Empregado> ultimaListaEmpregados;
     private Empregado ultimoEmpregadoUtilizado;
     private Empregado ultimoEmpregadoUtilizadoAuxiliar;
@@ -25,6 +27,12 @@ public class ControleEmpregados {
 
         this.listaEmpregados = new ArrayList<>();
         this.ultimaListaEmpregados = new ArrayList<>();
+        this.listaAgendasDePagamento = new ArrayList<>();
+
+        //INICIALIZAR AGENDAS DE PAGAMENTO PADRAO
+        listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, 6, 1));                      //HORISTA PADRAO [1]
+        listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, 6, 2));                      //COMISSIONADO PADRAO [2]
+        listaAgendasDePagamento.add(new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.MENSAL, 0, AgendaDePagamento.ULTIMO_DIA_UTIL)); //ASSALARIADO PADRAO [3]
     }
 
     //GERAL
@@ -32,6 +40,13 @@ public class ControleEmpregados {
 
         for(Empregado atual: listaEmpregados) {
             Console.mostrarString(atual.toString());
+        }
+    }
+
+    private void listarAgendasDePagamento() {
+
+        for(AgendaDePagamento atual: listaAgendasDePagamento) {
+            Console.mostrarString(atual.descricao());
         }
     }
 
@@ -53,6 +68,34 @@ public class ControleEmpregados {
         return null;
     }
 
+    private AgendaDePagamento recuperarAgendaDePagamentoPorId() {
+
+        int id;
+
+        listarAgendasDePagamento();
+
+        Console.solicitarIdentificacao();
+        id = Input.lerInt();
+
+        AgendaDePagamento agendaDePagamento = getAgendaDePagamento(id);
+        if(agendaDePagamento == null) {
+            Erro.identificacaoInvalida();
+        }
+        return agendaDePagamento;
+    }
+
+    private AgendaDePagamento getAgendaDePagamento(int identificacao) {
+
+        for(AgendaDePagamento atual: listaAgendasDePagamento) {
+            if(atual.getIdentificacao() == identificacao) {
+                AgendaDePagamento agendaDePagamento = new AgendaDePagamento();
+                atual.copiar(agendaDePagamento);
+                return agendaDePagamento;
+            }
+        }
+        return null;
+    }
+
 
     //ADICIONAR
     public boolean adicionarEmpregado() {
@@ -60,7 +103,8 @@ public class ControleEmpregados {
         String nome;
         String endereco;
         Empregado.Tipo tipo;
-        double salario = 0;
+        AgendaDePagamento agendaDePagamento;
+        double salario;
         double comissao = 0;
         boolean sindicalizado;
         double taxaSindicato = 0;
@@ -79,14 +123,17 @@ public class ControleEmpregados {
             case HORISTA:
                 Console.solicitarSalarioHora();
                 salario = Input.lerDouble();
+                agendaDePagamento = getAgendaDePagamento(1);
                 break;
             case COMISSIONADO:
                 Console.solicitarComissao();
                 comissao = Input.validarPercentual();
+                agendaDePagamento = getAgendaDePagamento(2);
             case ASSALARIADO:
+            default:
                 Console.solicitarSalarioMensal();
                 salario = Input.lerDouble();
-                break;
+                agendaDePagamento = getAgendaDePagamento(3);
         }
 
         Console.menuSindicalizado();
@@ -95,10 +142,10 @@ public class ControleEmpregados {
         if(sindicalizado) {
             idSindicato = ++idSindicatoGeral;
             Console.solicitarTaxaSindical();
-            taxaSindicato = Input.validarPercentual();
+            taxaSindicato = Input.lerDouble();
         }
 
-        Empregado novoEmpregado = new Empregado(nome, endereco, tipo, sindicalizado, taxaSindicato, salario, comissao, ++idSistemaGeral, idSindicato);
+        Empregado novoEmpregado = new Empregado(nome, endereco, tipo, agendaDePagamento, sindicalizado, taxaSindicato, salario, comissao, ++idSistemaGeral, idSindicato);
         ultimoEmpregadoUtilizado =  new Empregado(novoEmpregado);
         listaEmpregados.add(novoEmpregado);
         Console.empregadoAdicionado();
@@ -315,7 +362,21 @@ public class ControleEmpregados {
         Console.solicitarEndereco();
         novoTipo = Input.lerTipoEmpregado();
 
-        empregado.alterarTipo(novoTipo);
+        AgendaDePagamento novaAgendaDePagamento;
+
+        switch(novoTipo) {
+            case HORISTA:
+                novaAgendaDePagamento = getAgendaDePagamento(1);
+                break;
+            case COMISSIONADO:
+                novaAgendaDePagamento = getAgendaDePagamento(2);
+                break;
+            case ASSALARIADO:
+            default:
+                novaAgendaDePagamento = getAgendaDePagamento(3);
+        }
+
+        empregado.alterarTipo(novoTipo, novaAgendaDePagamento);
         Console.tipoAlterado();
     }
 
@@ -377,21 +438,26 @@ public class ControleEmpregados {
                 return false;
             } else {
                 Data hoje = new Data();
-                if(!ultimaListaEmpregados.isEmpty()) {
-                    ultimaListaEmpregados.clear();
+                if(ultimoDiaDePagamento != null && ultimoDiaDePagamento.mesmoDia(hoje)) {
+                    Console.empregadosJaForamPagosHoje();
+                } else {
+                    ultimoDiaDePagamentoAuxiliar = ultimoDiaDePagamento;
+                    ultimoDiaDePagamento = hoje;
+                    if(!ultimaListaEmpregados.isEmpty()) {
+                        ultimaListaEmpregados.clear();
+                    }
+                    for(Empregado atual: listaEmpregados) {
+                        ultimaListaEmpregados.add(new Empregado(atual));
+                        atual.efetuarPagamento(hoje);
+                    }
+                    return true;
                 }
-                for(Empregado atual: listaEmpregados) {
-                    ultimaListaEmpregados.add(new Empregado(atual));
-                    atual.pagar(hoje);
-                }
-                return true;
             }
         }
         return false;
     }
 
     //DESFAZER/REFAZER
-    //TODO FOLHA DE PAGAMENTO
     public boolean desfazerRefazer(int ultimaOperacao, boolean desfazer) {
 
         switch(ultimaOperacao) {
@@ -448,8 +514,14 @@ public class ControleEmpregados {
                     Console.alteracaoDeDadosRefeita();
                 }
                 break;
-            /**TODO case 7: //FOLHA DE PAGAMENTO
-                break;**/
+            case 7: //FOLHA DE PAGAMENTO
+                desfazerOuRefazerFolhaDePagamento();
+                if(desfazer) {
+                    Console.folhaDePagamentoDesfeita();
+                } else {
+                    Console.folhaDePagamentoRefeita();
+                }
+                break;
             default:
                 return desfazer;
         }
@@ -485,6 +557,43 @@ public class ControleEmpregados {
         }
     }
 
+    private void desfazerOuRefazerFolhaDePagamento() {
+
+        Data auxiliar = ultimoDiaDePagamento;
+        ultimoDiaDePagamento = ultimoDiaDePagamentoAuxiliar;
+        ultimoDiaDePagamentoAuxiliar = auxiliar;
+
+        ArrayList<Empregado> listaAuxiliar = new ArrayList<>(ultimaListaEmpregados);
+        ultimaListaEmpregados.clear();
+
+        for(Empregado atualAuxiliar: listaAuxiliar) {
+
+                for(Empregado atualLista: listaEmpregados) {
+
+                    if(atualAuxiliar.getIdSistema() == atualLista.getIdSistema()) {
+                        ultimaListaEmpregados.add(atualLista);
+                        listaEmpregados.remove(atualLista);
+                        break;
+                    }
+                }
+                listaEmpregados.add(atualAuxiliar);
+        }
+    }
+
+
+    //AGENDA DE PAGAMENTO
+    public void alterarAgendaDePagamento() {
+
+        if(listaEmpregados.isEmpty()) {
+            Console.listaVazia();
+        } else {
+            Empregado empregadoDaLista = recuperarEmpregadoPorId();
+            if(empregadoDaLista != null) {
+                AgendaDePagamento agendaDePagamento = recuperarAgendaDePagamentoPorId();
+                empregadoDaLista.setAgendaDePagamento(agendaDePagamento);
+            }
+        }
+    }
 
     //RELATORIO EMPREGADOS
     public void relatorio() {

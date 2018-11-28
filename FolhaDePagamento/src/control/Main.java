@@ -48,10 +48,10 @@ public class Main {
                     desfazer = controleEmpregados.desfazerRefazer(ultimaOperacao, desfazer);
                     break;
                 case 9:
-                    //TODO operacaoRealizda = controleEmpregados.agendaDePagamento();
+                    controleEmpregados.alterarAgendaDePagamento();
                     break;
                 case 10:
-                    //TODO operacaoRealizda = controleEmpregados.criarAgendaDePagamento();
+                    //TODO controleEmpregados.criarAgendaDePagamento();
                     break;
                 case 11:
                     sair = true;

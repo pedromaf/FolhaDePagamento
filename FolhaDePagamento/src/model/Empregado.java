@@ -36,7 +36,7 @@ public class Empregado {
     private int idSindicato;
     private double taxaSindicato;
 
-    public Empregado(String nome, String endereco, Tipo tipo, boolean sindicalizado, double taxaSindicato, double salario, double comissao, int idSistema, int idSindicato) {
+    public Empregado(String nome, String endereco, Tipo tipo, AgendaDePagamento agendaDePagamento, boolean sindicalizado, double taxaSindicato, double salario, double comissao, int idSistema, int idSindicato) {
 
         taxasDeServico = new ArrayList<>();
         cartoesDePonto = new ArrayList<>();
@@ -45,17 +45,14 @@ public class Empregado {
         if(tipo == Tipo.HORISTA) {
             this.salarioHora = salario;
             this.salarioMensal = 0;
-            this.agendaDePagamento = new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, "Sex", 1);
         } else if(tipo == Tipo.COMISSIONADO) {
             this.salarioMensal = salario;
             this.salarioHora = 0;
             this.comissao = comissao;
-            this.agendaDePagamento = new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.SEMANAL, "Sex", 2);
         } else {
             this.salarioHora = 0;
             this.comissao = 0;
             this.salarioMensal = salario;
-            this.agendaDePagamento = new AgendaDePagamento(AgendaDePagamento.TipoDePagamento.MENSAL, "---", AgendaDePagamento.ULTIMO_DIA_UTIL);
         }
 
         if(sindicalizado) {
@@ -67,6 +64,7 @@ public class Empregado {
         this.nome = nome;
         this.endereco = endereco;
         this.tipo = tipo;
+        this.agendaDePagamento = agendaDePagamento;
         this.saldo = 0;
         this.sindicalizado = sindicalizado;
         this.formaDePagamento = FormaDePagamento.BANCO; //PADRAO
@@ -238,11 +236,12 @@ public class Empregado {
 
 
     //ALTERAR DADOS
-    public void alterarTipo(Tipo novoTipo) {
+    public void alterarTipo(Tipo novoTipo, AgendaDePagamento novaAgendaDePagamento) {
 
         double novoSalario;
 
         this.setTipo(novoTipo);
+        this.agendaDePagamento = novaAgendaDePagamento;
 
         switch(novoTipo) {
             case ASSALARIADO:
@@ -290,10 +289,66 @@ public class Empregado {
 
 
     //FOLHA DE PAGAMENTO
-    //TODO
-    public void pagar(Data hoje) {
+    public void efetuarPagamento(Data hoje) {
 
+        if(this.agendaDePagamento.pagar(hoje)) {
+            switch(this.tipo) {
+                case COMISSIONADO:
+                    this.saldo += pagarResultadosDeVenda();
+                    this.saldo += this.salarioMensal/(this.agendaDePagamento.getFrequencia());
+                    break;
+                case ASSALARIADO:
+                    this.saldo += this.salarioMensal;
+                    break;
+                case HORISTA:
+                    this.saldo += pagarHoras();
+            }
+            if(this.sindicalizado) {
+                this.saldo -= this.taxaSindicato;
+                this.saldo -= descontarTaxasDeServico();
+            }
+        }
+    }
 
+    private double pagarResultadosDeVenda() {
+
+        double saldo = 0;
+        for(ResultadoDeVenda atual: this.resultadosDeVendas) {
+            if(atual.descontar()) {
+                saldo += this.comissao*(atual.getValor());
+            }
+        }
+        return saldo;
+    }
+
+    private double pagarHoras() {
+
+        double saldo = 0;
+        double horasTrabalhadas;
+        for(CartaoDePonto atual: this.cartoesDePonto) {
+            if(atual.descontar()) {
+                horasTrabalhadas = atual.horasTrabalhadas();
+                if(horasTrabalhadas > 8) {
+                    saldo += (8*this.salarioHora) + (horasTrabalhadas-8)*(this.salarioHora*1.5);
+                } else {
+                    saldo += (8*this.salarioHora);
+                }
+            }
+        }
+        return saldo;
+    }
+
+    private double descontarTaxasDeServico() {
+
+        double saldo = 0;
+        if(this.sindicalizado) {
+            for(TaxaDeServico atual: this.taxasDeServico) {
+                if(atual.descontar()) {
+                    saldo += atual.getValor();
+                }
+            }
+        }
+        return saldo;
     }
 
 
@@ -337,9 +392,14 @@ public class Empregado {
         return sindicalizado;
     }
 
+    //AGENDA DE PAGAMENTO
+    public boolean setAgendaDePagamento(AgendaDePagamento novaAgendaDePagamento) {
 
+        //TODO
+    }
 
     //RELATORIO (A FUNCAO RELATORIO NAO ESTA DE ACORDO COM A ORGANIZACAO MVC POR QUESTOES DE TEMPO)
+    //TODO ADICIONAR O RESTO DAS INFORMACOES
     public void infoRelatorio() {
 
         System.out.println(this.toString());

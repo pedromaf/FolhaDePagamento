@@ -17,4 +17,9 @@ public class Erro {
 
         System.out.println("ID invalido! Empregado nao encontrado.");
     }
+
+    public static void identificacaoInvalida() {
+
+        System.out.println("ID invalido! Agenda de pagamento nao encontrada.");
+    }
 }

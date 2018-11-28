@@ -14,7 +14,7 @@ public class Console {
         System.out.println("[5]  Lancar taxa de servico");
         System.out.println("[6]  Alterar informacoes do empregado");
         System.out.println("[7]  Rodar folha de pagamento");
-        System.out.println("[8]  Undo/Redo");
+        System.out.println("[8]  Desfazer/Refazer ultima operacao");
         System.out.println("[9]  Alterar agenda de pagamento do empregado");
         System.out.println("[10] Criar nova agenda de pagamento");
         System.out.println("[11] Sair");
@@ -91,7 +91,12 @@ public class Console {
 
     public static void solicitarId() {
 
-        System.out.println("\nDigite o id do empregado:");
+        System.out.println("\nDigite o ID do empregado:");
+    }
+
+    public static void solicitarIdentificacao() {
+
+        System.out.println("\nDigite o ID da agenda de pagamento:");
     }
 
     public static void solicitarNome() {
@@ -121,7 +126,7 @@ public class Console {
 
     public static void solicitarTaxaSindical() {
 
-        System.out.println("Digite o percentual da taxa sindical [0.0 ate 1.0]:");
+        System.out.println("Digite o valor da taxa sindical:");
     }
 
     public static void solicitarValorDaVenda() {
@@ -230,6 +235,7 @@ public class Console {
     public static void tipoAlterado() {
 
         System.out.println("Tipo do empregado alterado!");
+        System.out.println("Agenda de pagamento padrao definida automaticamente!");
     }
 
     public static void formaDePagamentoAlterada() {
@@ -260,6 +266,14 @@ public class Console {
     public static void desassociouSindicato() {
 
         System.out.println("Empregado agora nao esta mais associado ao sindicato.");
+    }
+
+
+
+    //FOLHA DE PAGAMENTO
+    public static void empregadosJaForamPagosHoje() {
+
+        System.out.println("A folha de pagamento ja foi executada hoje.");
     }
 
 
@@ -327,6 +341,16 @@ public class Console {
     public static void alteracaoDeDadosRefeita() {
 
         System.out.println("Operacao refeita! Alteracao de informacoes adicionada.");
+    }
+
+    public static void folhaDePagamentoDesfeita() {
+
+        System.out.println("Operacao desfeita! Pagamentos desfeitos.");
+    }
+
+    public static void folhaDePagamentoRefeita() {
+
+        System.out.println("Operacao refeita! Pagamentos refeitos.");
     }
 
     //GERAL
