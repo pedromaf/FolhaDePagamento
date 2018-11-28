@@ -299,6 +299,11 @@ public class Console {
         System.out.println("A folha de pagamento ja foi executada hoje.");
     }
 
+    public static void empregadosPagos() {
+
+        System.out.println("Folha de pagamento executada!");
+    }
+
 
 
     //AGENDA DE PAGAMENTO

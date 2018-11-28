@@ -138,7 +138,7 @@ public class ControleEmpregados {
                 salario = Input.lerDouble();
                 agendaDePagamento = getAgendaDePagamento(3);
         }
-        System.out.println("OXE");
+
         agendaDePagamento.gerarPrimeiroPagamento();
 
         Console.menuSindicalizado();
@@ -455,6 +455,7 @@ public class ControleEmpregados {
                         ultimaListaEmpregados.add(new Empregado(atual));
                         atual.efetuarPagamento(hoje);
                     }
+                    Console.empregadosPagos();
                     return true;
                 }
             }

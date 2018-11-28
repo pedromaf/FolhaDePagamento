@@ -96,7 +96,6 @@ public class AgendaDePagamento {
         int diaSemana = this.ultimoPagamento.getDiaDaSemana();
 
         if(this.tipoDePagamento == TipoDePagamento.MENSAL) {
-            System.out.println("ENTROU AQUI");
             mes = incrementarVariavel(mes, 12);
             if(mes == 1) {
                 ano++;
@@ -123,8 +122,8 @@ public class AgendaDePagamento {
                     break;
                 }
             }
+            this.proximoPagamento = new Data(diaSemana, dia, mes, ano);
         }
-        this.proximoPagamento = new Data(diaSemana, dia, mes, ano);
     }
 
     private int incrementarVariavel(int variavel, int limite) {
