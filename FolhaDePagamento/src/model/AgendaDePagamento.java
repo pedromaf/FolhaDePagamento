@@ -60,16 +60,19 @@ public class AgendaDePagamento {
 
     public void copiar(AgendaDePagamento agendaDePagamento) {
 
-        agendaDePagamento.identificacao = this.identificacao;
-        if(this.ultimoPagamento != null) {
-            this.ultimoPagamento.copiar(agendaDePagamento.ultimoPagamento);
+        if(agendaDePagamento != null) {
+
+            agendaDePagamento.identificacao = this.identificacao;
+            if(this.ultimoPagamento != null) {
+                this.ultimoPagamento.copiar(agendaDePagamento.ultimoPagamento);
+            }
+            if(this.proximoPagamento != null) {
+                this.proximoPagamento.copiar(agendaDePagamento.proximoPagamento);
+            }
+            agendaDePagamento.tipoDePagamento = this.tipoDePagamento;
+            agendaDePagamento.diaDaSemana = this.diaDaSemana;
+            agendaDePagamento.frequencia = this.frequencia;
         }
-        if(this.proximoPagamento != null) {
-            this.proximoPagamento.copiar(agendaDePagamento.proximoPagamento);
-        }
-        agendaDePagamento.tipoDePagamento = this.tipoDePagamento;
-        agendaDePagamento.diaDaSemana = this.diaDaSemana;
-        agendaDePagamento.frequencia = this.frequencia;
     }
 
     public void calcularProximoPagamento() {

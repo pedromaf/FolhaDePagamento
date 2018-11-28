@@ -4,7 +4,7 @@ import java.util.Calendar;
 
 public class Data {
 
-    private int diaDaSemana;//DOMINGO = 1 -> SABADO = 7
+    private int diaDaSemana = 0;//DOMINGO = 1 -> SABADO = 7
 
     private int dia;
     private int mes;
@@ -126,13 +126,15 @@ public class Data {
 
     public void copiar(Data data) {
 
-        data.diaDaSemana = this.diaDaSemana;
-        data.dia = this.dia;
-        data.mes = this.mes;
-        data.ano = this.ano;
-        data.hora = this.hora;
-        data.minuto = this.minuto;
-        data.segundo = this.segundo;
+        if(data != null) {
+            data.diaDaSemana = this.diaDaSemana;
+            data.dia = this.dia;
+            data.mes = this.mes;
+            data.ano = this.ano;
+            data.hora = this.hora;
+            data.minuto = this.minuto;
+            data.segundo = this.segundo;
+        }
     }
 
     public String toString() {
